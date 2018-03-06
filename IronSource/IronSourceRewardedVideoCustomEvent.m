@@ -118,7 +118,8 @@ static BOOL initRewardedVideoSuccessfully = NO;
     }
     
     _instanceId = @"0";
-    if ([parameters objectForKey:kIronSourceInstanceId] != nil){
+   if (![[parameters objectForKey:kIronSourceInstanceId] isEqualToString:@""] && [parameters objectForKey:kIronSourceInstanceId] != nil )
+    {
         _instanceId = [parameters objectForKey:kIronSourceInstanceId];
     }
     
