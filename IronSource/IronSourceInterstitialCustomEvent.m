@@ -32,7 +32,8 @@ static BOOL initInterstitialSuccessfully;
         _isTestEnabled = [[info objectForKey:kIronSourceIsTestEnabled] boolValue];
     }
     
-    if ([info objectForKey:kIronSourceInstanceId] != nil){
+    if (![[info objectForKey:kIronSourceInstanceId] isEqualToString:@""] &&
+        [info objectForKey:kIronSourceInstanceId] != nil ){
         _instanceId = [info objectForKey:kIronSourceInstanceId];
     }
     
