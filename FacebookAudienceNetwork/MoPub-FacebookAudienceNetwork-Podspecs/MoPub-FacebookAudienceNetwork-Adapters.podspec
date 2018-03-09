@@ -19,5 +19,5 @@ s.source           = { :git => 'https://github.com/mopub/mopub-ios-mediation.git
 s.ios.deployment_target = '8.0'
 s.source_files = 'FacebookAudienceNetwork/*.{h,m}'
 s.dependency 'mopub-ios-sdk', '~> 4.0'
-s.dependency 'FBAudienceNetwork', '~> 4.0'
+s.dependency 'FBAudienceNetwork', '~> 4.27.0'
 end
