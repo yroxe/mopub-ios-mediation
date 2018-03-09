@@ -19,5 +19,5 @@ s.source           = { :git => 'https://github.com/mopub/mopub-ios-mediation.git
 s.ios.deployment_target = '8.0'
 s.source_files = 'AdMob/*.{h,m}'
 s.dependency 'mopub-ios-sdk', '~> 4.0'
-s.dependency 'Google-Mobile-Ads-SDK', '~> 7.0'
+s.dependency 'Google-Mobile-Ads-SDK', '~> 7.27.0'
 end
