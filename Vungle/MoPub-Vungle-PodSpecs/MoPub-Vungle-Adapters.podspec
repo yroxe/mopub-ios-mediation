@@ -20,5 +20,5 @@ s.source           = { :git => 'https://github.com/mopub/mopub-ios-mediation.git
 s.ios.deployment_target = '8.0'
 s.source_files ='Vungle/*.{h,m}'
 s.dependency 'mopub-ios-sdk', '~> 4.0'
-s.dependency 'VungleSDK-iOS', '~> 5.0'
+s.dependency 'VungleSDK-iOS', '~> 5.3.2'
 end
