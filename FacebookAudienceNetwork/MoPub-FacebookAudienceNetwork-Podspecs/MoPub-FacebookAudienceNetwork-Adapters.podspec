@@ -5,7 +5,7 @@
 
 Pod::Spec.new do |s|
 s.name             = 'MoPub-FacebookAudienceNetwork-Adapters'
-s.version          = '4.27.0.3'
+s.version          = '4.28.0.0'
 s.summary          = 'Facebook Adapters for mediating through MoPub.'
 s.description      = <<-DESC
 Supported ad formats: Banners, Interstitial, Rewarded Video and Native.\n
@@ -20,5 +20,5 @@ s.ios.deployment_target = '8.0'
 s.static_framework = true
 s.source_files = 'FacebookAudienceNetwork/*.{h,m}'
 s.dependency 'mopub-ios-sdk', '~> 4.0'
-s.dependency 'FBAudienceNetwork', '~> 4.27.0'
+s.dependency 'FBAudienceNetwork', '~> 4.28.0'
 end
