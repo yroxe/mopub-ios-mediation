@@ -55,7 +55,7 @@ static NSMutableDictionary<NSString *, ALIncentivizedInterstitialAd *> *ALGlobal
     [self log: @"Requesting AppLovin rewarded video with info: %@", info];
     
     self.sdk = [self SDKFromCustomEventInfo: info];
-    [self.sdk setPluginVersion: @"MoPub-Certified-2.1.0"];
+    [self.sdk setPluginVersion: @"MoPub-Certified-2.1.1"];
     
     // Zones support is available on AppLovin SDK 4.5.0 and higher
     NSString *zoneIdentifier;
