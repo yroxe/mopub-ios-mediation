@@ -122,7 +122,9 @@ static NSObject *ALGlobalInterstitialAdsLock;
     
     [[self class] enqueueAd: ad forZoneIdentifier: self.zoneIdentifier];
     
-    [self.delegate interstitialCustomEvent: self didLoadAd: ad];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.delegate interstitialCustomEvent: self didLoadAd: ad];
+    });
 }
 
 - (void)adService:(ALAdService *)adService didFailToLoadAdWithError:(int)code
@@ -132,7 +134,10 @@ static NSObject *ALGlobalInterstitialAdsLock;
     NSError *error = [NSError errorWithDomain: kALMoPubMediationErrorDomain
                                          code: [self toMoPubErrorCode: code]
                                      userInfo: nil];
-    [self.delegate interstitialCustomEvent: self didFailToLoadAdWithError: error];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.delegate interstitialCustomEvent: self didFailToLoadAdWithError: error];
+    });
 }
 
 #pragma mark - Ad Display Delegate

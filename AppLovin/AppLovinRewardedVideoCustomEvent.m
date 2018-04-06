@@ -126,7 +126,10 @@ static NSMutableDictionary<NSString *, ALIncentivizedInterstitialAd *> *ALGlobal
 - (void)adService:(ALAdService *)adService didLoadAd:(ALAd *)ad
 {
     [self log: @"Rewarded video did load ad: %@", ad.adIdNumber];
-    [self.delegate rewardedVideoDidLoadAdForCustomEvent: self];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.delegate rewardedVideoDidLoadAdForCustomEvent: self];
+    });
 }
 
 - (void)adService:(ALAdService *)adService didFailToLoadAdWithError:(int)code
@@ -136,7 +139,10 @@ static NSMutableDictionary<NSString *, ALIncentivizedInterstitialAd *> *ALGlobal
     NSError *error = [NSError errorWithDomain: kALMoPubMediationErrorDomain
                                          code: [self toMoPubErrorCode: code]
                                      userInfo: nil];
-    [self.delegate rewardedVideoDidFailToLoadAdForCustomEvent: self error: error];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.delegate rewardedVideoDidFailToLoadAdForCustomEvent: self error: error];
+    });
 }
 
 #pragma mark - Ad Display Delegate
