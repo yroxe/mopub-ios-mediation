@@ -20,5 +20,5 @@ s.ios.deployment_target = '8.0'
 s.static_framework = true
 s.source_files = 'Tapjoy/*.{h,m}'
 s.dependency 'mopub-ios-sdk', '~> 4.0'
-s.dependency 'TapjoySDK', '~> 11.12.0'
+s.dependency 'TapjoySDK', '11.12.0'
 end
