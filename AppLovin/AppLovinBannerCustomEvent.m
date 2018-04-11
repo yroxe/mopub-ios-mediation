@@ -1,12 +1,6 @@
 //
 //  AppLovinBannerCustomEvent.m
 //
-//
-//  Created by Thomas So on 7/6/17.
-//
-//
-
-
 #import "AppLovinBannerCustomEvent.h"
 #import "MPConstants.h"
 #import "MPError.h"
