@@ -1,10 +1,6 @@
 //
 //  AppLovinInterstitialCustomEvent.m
 //
-//
-//  Created by Thomas So on 5/21/17.
-//
-//
 
 #import "AppLovinInterstitialCustomEvent.h"
 #import "MPError.h"
