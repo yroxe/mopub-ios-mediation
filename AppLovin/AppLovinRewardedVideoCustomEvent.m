@@ -1,10 +1,6 @@
 //
 //  AppLovinRewardedVideoCustomEvent.m
 //
-//
-//  Created by Thomas So on 5/21/17.
-//
-//
 
 #import "AppLovinRewardedVideoCustomEvent.h"
 #import "MPRewardedVideoReward.h"
