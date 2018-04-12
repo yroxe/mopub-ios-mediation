@@ -5,7 +5,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'MoPub-Applovin-Adapters'
-  s.version          = '4.8.4.0'
+  s.version          = '4.8.4.1'
   s.summary          = 'Applovin Adapters for mediating through MoPub.'
   s.description      = <<-DESC
 Supported ad formats: Banners, Interstitial, Rewarded Video and Native.\n
