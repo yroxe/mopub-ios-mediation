@@ -20,6 +20,6 @@ s.ios.deployment_target = '8.0'
 s.static_framework = true
 s.source_files = 'Flurry/*.{h,m}'
 s.dependency 'mopub-ios-sdk', '~> 4.0'
-s.dependency 'Flurry-iOS-SDK/FlurrySDK', '8.0'
+s.dependency 'Flurry-iOS-SDK/FlurrySDK', '8.4.0'
 s.dependency 'Flurry-iOS-SDK/FlurryAds', '8.4.0'
 end
