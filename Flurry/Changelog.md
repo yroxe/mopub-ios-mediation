@@ -1,7 +1,7 @@
 ## Changelog
   * 8.4.0.1
     * This version of the adapters has been certified with Flurry 8.4.0.
-    *Podspec version bumped in order to pin the network SDK version.
+    * Podspec version bumped in order to pin the network SDK version.
     
   * 8.4.0.0
     * This version of the adapters has been certified with Flurry 8.4.0.
