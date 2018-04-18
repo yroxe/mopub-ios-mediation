@@ -1,5 +1,5 @@
 ## Changelog
-  * 8.4.0.0
+  * 8.4.0.1
     * This version of the adapters has been certified with Flurry 8.4.0.
     
   * 8.3.4.0

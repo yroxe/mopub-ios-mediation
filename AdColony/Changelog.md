@@ -1,5 +1,5 @@
 ## Changelog
-  * 3.3.0.0
+  * 3.3.0.3
     * This version of the adapters has been certified with AdColony 3.3.0.
 
   * Initial Commit
