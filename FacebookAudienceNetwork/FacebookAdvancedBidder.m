@@ -14,7 +14,7 @@
     if (self == [FacebookAdvancedBidder self]) {
         // Initialize an adview to trigger [FBAdUtility initializeAudienceNetwork]
         FBAdView * initHackforFacebook = [[FBAdView alloc] initWithPlacementID:@"" adSize:kFBAdSize320x50 rootViewController:[UIViewController new]];
-        if (initHackFacebook) {
+        if (initHackforFacebook) {
             NSLog(@"Initialized Facebook Audience Network");
         }
     }
