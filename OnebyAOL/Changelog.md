@@ -1,8 +1,11 @@
 ## Changelog
+* 6.8.1.2
+  * Removed support for OnebyAOL SDK dependency and added the support back for adapter pods.
+
 * 6.8.1.1
-    * This version of the adapters has been certified with One by AOL 6.8.1.
-    * Updated consent data value to lower case
-    * Removed cocoapods support
+  * This version of the adapters has been certified with One by AOL 6.8.1.
+  * Updated consent data value to lower case
+  * Removed cocoapods support
     
 * 6.8.1.0
    * This version of the adapters has been certified with One by AOL 6.8.1.
