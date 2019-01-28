@@ -20,7 +20,7 @@ s.ios.deployment_target = '9.0'
 s.static_framework = true
 s.source_files = 'FacebookAudienceNetwork/*.{h,m}'
 s.subspec 'MoPub' do |ms|
-  ms.dependency 'mopub-ios-sdk', '~> 5.0'
+  ms.dependency 'mopub-ios-sdk', '~> 5.5'
 end
 s.subspec 'Network' do |ns|
   ns.dependency 'FBAudienceNetwork', '5.1.0'
