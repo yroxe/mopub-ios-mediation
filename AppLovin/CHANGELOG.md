@@ -1,4 +1,12 @@
 ## Changelog
+   * 6.1.4.1
+     * **Note**: This version is only compatible with the 5.5.0+ release of the MoPub SDK.
+     * Add the `AppLovinAdapterConfiguration` class to: 
+          * pre-initialize the AppLovin SDK during MoPub SDK initialization process
+          * store adapter and SDK versions for logging purpose
+          * return the Advanced Biding token previously returned by `AppLovinAdvancedBidder.m`
+     * Streamline adapter logs via `MPLogAdEvent` to make debugging more efficient. For more details, check the [iOS Initialization guide](https://developers.mopub.com/docs/ios/initialization/) and [Writing Custom Events guide](https://developers.mopub.com/docs/ios/custom-events/).
+
    * 6.1.4.0
      * This version of the adapters has been certified with AppLovin SDK 6.1.4.
 
