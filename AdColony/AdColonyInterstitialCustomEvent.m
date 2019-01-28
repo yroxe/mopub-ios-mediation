@@ -9,6 +9,7 @@
 #import "AdColonyAdapterConfiguration.h"
 #import "AdColonyInterstitialCustomEvent.h"
 #if __has_include("MoPub.h")
+    #import "MPError.h"
     #import "MPLogging.h"
 #endif
 #import "AdColonyController.h"
