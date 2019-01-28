@@ -21,6 +21,7 @@
 @property (nonatomic, strong) FBRewardedVideoAd *fbRewardedVideoAd;
 @property (nonatomic, strong) MPRealTimeTimer *expirationTimer;
 @property (nonatomic, assign) BOOL hasTrackedImpression;
+@property (nonatomic, copy) NSString *fbPlacementId;
 
 @end
 
@@ -38,8 +39,10 @@
 
 - (void)requestRewardedVideoWithCustomEventInfo:(NSDictionary *)info adMarkup:(NSString *)adMarkup {
     if (![info objectForKey:@"placement_id"]) {
-        MPLogError(@"Placement ID is required for Facebook Rewarded Video ad");
-        [self.delegate rewardedVideoDidFailToLoadAdForCustomEvent:self error:nil];
+        NSError *error = [NSError errorWithCode:MOPUBErrorAdapterFailedToLoadAd localizedDescription:@"Invalid Facebook placement ID"];
+        MPLogAdEvent([MPLogEvent adLoadFailedForAdapter:NSStringFromClass(self.class) error:error], nil);
+        
+        [self.delegate rewardedVideoDidFailToLoadAdForCustomEvent:self error:error];
         return;
     }
     
@@ -47,15 +50,20 @@
     self.fbRewardedVideoAd.delegate = self;
     
     [FBAdSettings setMediationService:[NSString stringWithFormat:@"MOPUB_%@", MP_SDK_VERSION]];
+    
     // Load the advanced bid payload.
     if (adMarkup != nil) {
-        MPLogInfo(@"Loading Facebook rewarded video ad markup");
+        MPLogInfo(@"Loading Facebook rewarded video ad markup for Advanced Bidding");
         [self.fbRewardedVideoAd loadAdWithBidPayload:adMarkup];
+
+        MPLogAdEvent([MPLogEvent adLoadAttemptForAdapter:NSStringFromClass(self.class) dspCreativeId:nil dspName:nil], self.fbPlacementId);
     }
     // Request a rewarded video ad.
     else {
-        MPLogInfo(@"Requesting Facebook rewarded video ad");
+        MPLogInfo(@"Loading Facebook rewarded video ad");
         [self.fbRewardedVideoAd loadAd];
+
+        MPLogAdEvent([MPLogEvent adLoadAttemptForAdapter:NSStringFromClass(self.class) dspCreativeId:nil dspName:nil], self.fbPlacementId);
     }
 }
 
@@ -69,16 +77,21 @@
 {
     if(![self hasAdAvailable])
     {
-        MPLogError(@"Facebook rewarded video ad was not available");
-        NSError *error = [NSError errorWithDomain:MoPubRewardedVideoAdsSDKDomain code:MPRewardedVideoAdErrorNoAdsAvailable userInfo:nil];
+        NSError *error = [NSError errorWithCode:MOPUBErrorNoInventory localizedDescription:@"Error in loading Facebook Rewarded Video"];
+
+        MPLogAdEvent([MPLogEvent adShowFailedForAdapter:NSStringFromClass(self.class) error:error], self.fbPlacementId);
         [self.delegate rewardedVideoDidFailToPlayForCustomEvent:self error:error];
     }
     else
     {
-        MPLogInfo(@"Facebook rewarded video ad will be presented");
+        MPLogAdEvent([MPLogEvent adShowAttemptForAdapter:NSStringFromClass(self.class)], self.fbPlacementId);
+
+        MPLogAdEvent([MPLogEvent adWillAppearForAdapter:NSStringFromClass(self.class)], self.fbPlacementId);
         [self.delegate rewardedVideoWillAppearForCustomEvent:self];
+
         [self.fbRewardedVideoAd showAdFromRootViewController:viewController];
-        MPLogInfo(@"Facebook rewarded video ad was presented");
+
+        MPLogAdEvent([MPLogEvent adDidAppearForAdapter:NSStringFromClass(self.class)], self.fbPlacementId);
         [self.delegate rewardedVideoDidAppearForCustomEvent:self];
     }
 }
@@ -99,7 +112,7 @@
  */
 - (void)rewardedVideoAdDidClick:(FBRewardedVideoAd *)rewardedVideoAd
 {
-    MPLogInfo(@"Facebook rewarded video ad was clicked");
+    MPLogAdEvent([MPLogEvent adTappedForAdapter:NSStringFromClass(self.class)], self.fbPlacementId);
     [self.delegate rewardedVideoDidReceiveTapEventForCustomEvent:self ];
 }
 
@@ -113,16 +126,19 @@
  */
 - (void)rewardedVideoAdDidLoad:(FBRewardedVideoAd *)rewardedVideoAd
 {
-    MPLogInfo(@"Facebook rewarded video ad was loaded. Can present now.");
     [self.delegate rewardedVideoDidLoadAdForCustomEvent:self ];
+    MPLogAdEvent([MPLogEvent adLoadSuccessForAdapter:NSStringFromClass(self.class)], self.fbPlacementId);
     
-    // introduce timer for 1 hour as per caching logic introduced by FB
+    // introduce timer for 1 hour per expiration logic introduced by FB
     __weak __typeof__(self) weakSelf = self;
     self.expirationTimer = [[MPRealTimeTimer alloc] initWithInterval:FB_ADS_EXPIRATION_INTERVAL block:^(MPRealTimeTimer *timer){
         __strong __typeof__(weakSelf) strongSelf = weakSelf;
         if (strongSelf && !strongSelf.hasTrackedImpression) {
             [strongSelf.delegate rewardedVideoDidExpireForCustomEvent:strongSelf];
-            MPLogInfo(@"Facebook Rewarded Video ad expired as per the audience network's caching policy");
+            
+            NSError *error = [NSError errorWithCode:MOPUBErrorAdapterFailedToLoadAd localizedDescription:@"Facebook rewarded video ad expired  per Audience Network's expiration policy"];
+            MPLogAdEvent([MPLogEvent adShowFailedForAdapter:NSStringFromClass(self.class) error:error], self.fbPlacementId);
+
             strongSelf.fbRewardedVideoAd = nil;
         }
         [strongSelf.expirationTimer invalidate];
@@ -141,7 +157,7 @@
  */
 - (void)rewardedVideoAdDidClose:(FBRewardedVideoAd *)rewardedVideoAd
 {
-    MPLogInfo(@"Facebook rewarded video ad is dismissed.");
+    MPLogAdEvent([MPLogEvent adDidDisappearForAdapter:NSStringFromClass(self.class)], self.fbPlacementId);
     [self.delegate rewardedVideoDidDisappearForCustomEvent:self];
 }
 
@@ -155,7 +171,7 @@
  */
 - (void)rewardedVideoAdWillClose:(FBRewardedVideoAd *)rewardedVideoAd
 {
-    MPLogInfo(@"Facebook rewarded video ad will be dismissed.");
+    MPLogAdEvent([MPLogEvent adWillDisappearForAdapter:NSStringFromClass(self.class)], self.fbPlacementId);
     [self.delegate rewardedVideoWillDisappearForCustomEvent:self];
 }
 
@@ -170,7 +186,7 @@
  */
 - (void)rewardedVideoAd:(FBRewardedVideoAd *)rewardedVideoAd didFailWithError:(NSError *)error
 {
-    MPLogInfo(@"Facebook rewarded video ad failed to load with error: %@", error.localizedDescription);
+    MPLogAdEvent([MPLogEvent adLoadFailedForAdapter:NSStringFromClass(self.class) error:error], nil);
     [self.delegate rewardedVideoDidFailToLoadAdForCustomEvent:self error:error];
 }
 
@@ -186,7 +202,6 @@
 - (void)rewardedVideoAdVideoComplete:(FBRewardedVideoAd *)rewardedVideoAd
 {
     MPLogInfo(@"Facebook rewarded video ad has finished playing successfully");
-    
     // Passing the reward type and amount as unspecified. Set the reward value in mopub UI.
     [self.delegate rewardedVideoShouldRewardUserForCustomEvent:self reward:[[MPRewardedVideoReward alloc] initWithCurrencyAmount:@(kMPRewardedVideoRewardCurrencyAmountUnspecified)]];
 }
@@ -201,12 +216,10 @@
  */
 - (void)rewardedVideoAdWillLogImpression:(FBRewardedVideoAd *)rewardedVideoAd
 {
-    MPLogInfo(@"Facebook rewarded video has started playing and hence logging impression");
+    MPLogAdEvent([MPLogEvent adShowSuccessForAdapter:NSStringFromClass(self.class)], self.fbPlacementId);
     //set the tracker to true when the ad is shown on the screen. So that the timer is invalidated.
     _hasTrackedImpression = true;
     [self.expirationTimer invalidate];
 }
 
 @end
-
-
