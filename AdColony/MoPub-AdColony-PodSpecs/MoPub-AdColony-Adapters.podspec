@@ -5,7 +5,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'MoPub-AdColony-Adapters'
-  s.version          = '3.3.5.0'
+  s.version          = '3.3.5.1'
   s.summary          = 'AdColony Adapters for mediating through MoPub.'
   s.description      = <<-DESC
 Supported ad formats: Interstitial, Rewarded Video.\n
@@ -15,10 +15,14 @@ For inquiries and support, please email support@adcolony.com. \n
   s.homepage         = 'https://github.com/mopub/mopub-ios-mediation'
   s.license          = { :type => 'New BSD', :file => 'LICENSE' }
   s.author           = { 'MoPub' => 'support@mopub.com' }
-  s.source           = { :git => 'https://github.com/mopub/mopub-ios-mediation.git', :tag => 'adcolony-3.3.5.0' }
+  s.source           = { :git => 'https://github.com/mopub/mopub-ios-mediation.git', :tag => 'adcolony-3.3.5.1' }
   s.ios.deployment_target = '8.0'
   s.static_framework = true
   s.source_files = 'AdColony/*.{h,m}'
-  s.dependency 'mopub-ios-sdk', '~> 5.0'
-  s.dependency 'AdColony', '3.3.5'
+  s.subspec 'MoPub' do |ms|
+    ms.dependency 'mopub-ios-sdk', '~> 5.0'
+  end
+  s.subspec 'Network' do |ns|
+    ns.dependency 'AdColony', '3.3.5'
+  end
 end
