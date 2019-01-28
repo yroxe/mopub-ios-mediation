@@ -20,7 +20,7 @@ For inquiries and support, please visit https://www.applovin.com/support \n
   s.static_framework = true
   s.source_files = 'Applovin/*.{h,m}'
   s.subspec 'MoPub' do |ms|
-    ms.dependency 'mopub-ios-sdk', '~> 5.0'
+    ms.dependency 'mopub-ios-sdk', '~> 5.5'
   end
   s.subspec 'Network' do |ns|
     ns.dependency 'AppLovinSDK', '6.1.4'
