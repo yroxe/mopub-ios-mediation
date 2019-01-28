@@ -1,4 +1,11 @@
 ## Changelog
+  * 9.2.1.2
+    * **Note**: This version is only compatible with the 5.5.0+ release of the MoPub SDK.
+    * Add the `FlurryAdapterConfiguration` class to: 
+         * pre-initialize the Flurry SDK during MoPub SDK initialization process
+         * store adapter and SDK versions for logging purpose
+    * Streamline adapter logs via `MPLogAdEvent` to make debugging more efficient. For more details, check the [iOS Initialization guide](https://developers.mopub.com/docs/ios/initialization/) and [Writing Custom Events guide](https://developers.mopub.com/docs/ios/custom-events/).
+
   * 9.2.1.1
     * Ensure an exclusive pairing between Flurry's FlurryNativeAdAdapter and FlurryNativeVideoAdRenderer.
 
