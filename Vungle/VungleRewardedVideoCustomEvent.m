@@ -9,6 +9,7 @@
 #import "VungleAdapterConfiguration.h"
 #if __has_include("MoPub.h")
     #import "MPLogging.h"
+    #import "MPError.h"
     #import "MPRewardedVideoReward.h"
     #import "MPRewardedVideoError.h"
 #endif
