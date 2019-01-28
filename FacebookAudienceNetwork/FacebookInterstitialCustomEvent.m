@@ -21,6 +21,7 @@
 @property (nonatomic, strong) FBInterstitialAd *fbInterstitialAd;
 @property (nonatomic, strong) MPRealTimeTimer *expirationTimer;
 @property (nonatomic, assign) BOOL hasTrackedImpression;
+@property (nonatomic, copy) NSString *fbPlacementId;
 
 @end
 
@@ -35,9 +36,14 @@
 
 - (void)requestInterstitialWithCustomEventInfo:(NSDictionary *)info adMarkup:(NSString *)adMarkup
 {
-    if (![info objectForKey:@"placement_id"]) {
-        MPLogError(@"Placement ID is required for Facebook interstitial ad");
-        [self.delegate interstitialCustomEvent:self didFailToLoadAdWithError:nil];
+    self.fbPlacementId = [info objectForKey:@"placement_id"];
+    if (self.fbPlacementId == nil) {
+     
+        NSError *error = [NSError errorWithCode:MOPUBErrorAdapterFailedToLoadAd localizedDescription:@"Invalid Facebook placement ID"];
+        MPLogAdEvent([MPLogEvent adLoadFailedForAdapter:NSStringFromClass(self.class) error:error], nil);
+        
+        [self.delegate interstitialCustomEvent:self didFailToLoadAdWithError:error];
+        
         return;
     }
 
@@ -47,25 +53,34 @@
 
     // Load the advanced bid payload.
     if (adMarkup != nil) {
-        MPLogInfo(@"Loading Facebook interstitial ad markup");
+        MPLogInfo(@"Loading Facebook interstitial ad markup for Advanced Bidding");
         [self.fbInterstitialAd loadAdWithBidPayload:adMarkup];
+
+        MPLogAdEvent([MPLogEvent adLoadAttemptForAdapter:NSStringFromClass(self.class) dspCreativeId:nil dspName:nil], self.fbPlacementId);
     }
     // Request a interstitial ad.
     else {
-        MPLogInfo(@"Requesting Facebook interstitial ad");
+        MPLogInfo(@"Loading Facebook interstitial");
         [self.fbInterstitialAd loadAd];
+
+        MPLogAdEvent([MPLogEvent adLoadAttemptForAdapter:NSStringFromClass(self.class) dspCreativeId:nil dspName:nil], self.fbPlacementId);
     }
 }
 
 - (void)showInterstitialFromRootViewController:(UIViewController *)controller {
     if (!self.fbInterstitialAd || !self.fbInterstitialAd.isAdValid) {
-        MPLogError(@"Facebook interstitial ad was not loaded");
+        NSError *error = [NSError errorWithCode:MOPUBErrorAdapterFailedToLoadAd localizedDescription:@"Error in loading Facebook Interstitial"];
+        MPLogAdEvent([MPLogEvent adShowFailedForAdapter:NSStringFromClass(self.class) error:error], self.fbPlacementId);
         [self.delegate interstitialCustomEventDidExpire:self];
     } else {
-        MPLogInfo(@"Facebook interstitial ad will be presented");
+        MPLogAdEvent([MPLogEvent adShowAttemptForAdapter:NSStringFromClass(self.class)], self.fbPlacementId);
+
+        MPLogAdEvent([MPLogEvent adWillAppearForAdapter:NSStringFromClass(self.class)], self.fbPlacementId);
         [self.delegate interstitialCustomEventWillAppear:self];
+
         [self.fbInterstitialAd showAdFromRootViewController:controller];
-        MPLogInfo(@"Facebook interstitial ad was presented");
+        
+        MPLogAdEvent([MPLogEvent adDidAppearForAdapter:NSStringFromClass(self.class)], self.fbPlacementId);
         [self.delegate interstitialCustomEventDidAppear:self];
     }
 }
@@ -84,29 +99,30 @@
 
 - (void)interstitialAdDidLoad:(FBInterstitialAd *)interstitialAd
 {
-    MPLogInfo(@"Facebook intersitital ad was loaded. Can present now");
+    MPLogAdEvent([MPLogEvent adLoadSuccessForAdapter:NSStringFromClass(self.class)], self.fbPlacementId);
     [self.delegate interstitialCustomEvent:self didLoadAd:interstitialAd];
-
-    // introduce timer for 1 hour as per caching logic introduced by FB
-
+    
+    // introduce timer for 1 hour per expiration logic introduced by FB
     __weak __typeof__(self) weakSelf = self;
     self.expirationTimer = [[MPRealTimeTimer alloc] initWithInterval:FB_ADS_EXPIRATION_INTERVAL block:^(MPRealTimeTimer *timer){
         __strong __typeof__(weakSelf) strongSelf = weakSelf;
         if (strongSelf && !strongSelf.hasTrackedImpression) {
             [strongSelf.delegate interstitialCustomEventDidExpire:strongSelf];
-            MPLogInfo(@"Facebook intersitital ad expired as per the audience network's caching policy");
+            NSError *error = [NSError errorWithCode:MOPUBErrorAdapterFailedToLoadAd localizedDescription:@"Facebook interstitial ad expired  per Audience Network's expiration policy"];
+
+            MPLogAdEvent([MPLogEvent adShowFailedForAdapter:NSStringFromClass(self.class) error:error], self.fbPlacementId);
             //Delete the cached objects
             strongSelf.fbInterstitialAd = nil;
         }
         [strongSelf.expirationTimer invalidate];
     }];
     [self.expirationTimer scheduleNow];
-
 }
 
 - (void)interstitialAdWillLogImpression:(FBInterstitialAd *)interstitialAd
 {
-    MPLogInfo(@"Facebook intersitital ad is logging impressions for interstitials");
+    MPLogAdEvent([MPLogEvent adShowSuccessForAdapter:NSStringFromClass(self.class)], self.fbPlacementId);
+    
     //set the tracker to true when the ad is shown on the screen. So that the timer is invalidated.
     _hasTrackedImpression = true;
     [self.delegate trackImpression];
@@ -115,26 +131,26 @@
 
 - (void)interstitialAd:(FBInterstitialAd *)interstitialAd didFailWithError:(NSError *)error
 {
-    MPLogInfo(@"Facebook intersitital ad failed to load with error: %@", error.localizedDescription);
-    [self.delegate interstitialCustomEvent:self didFailToLoadAdWithError:nil];
+    MPLogAdEvent([MPLogEvent adLoadFailedForAdapter:NSStringFromClass(self.class) error:error], self.fbPlacementId);
+    [self.delegate interstitialCustomEvent:self didFailToLoadAdWithError:error];
 }
 
 - (void)interstitialAdDidClick:(FBInterstitialAd *)interstitialAd
 {
-    MPLogInfo(@"Facebook interstitial ad was clicked");
+    MPLogAdEvent([MPLogEvent adTappedForAdapter:NSStringFromClass(self.class)], self.fbPlacementId);
     [self.delegate trackClick];
     [self.delegate interstitialCustomEventDidReceiveTapEvent:self];
 }
 
 - (void)interstitialAdDidClose:(FBInterstitialAd *)interstitialAd
 {
-    MPLogInfo(@"Facebook interstitial ad was closed");
+    MPLogAdEvent([MPLogEvent adDidDisappearForAdapter:NSStringFromClass(self.class)], self.fbPlacementId);
     [self.delegate interstitialCustomEventDidDisappear:self];
 }
 
 - (void)interstitialAdWillClose:(FBInterstitialAd *)interstitialAd
 {
-    MPLogInfo(@"Facebook interstitial ad will close");
+    MPLogAdEvent([MPLogEvent adWillDisappearForAdapter:NSStringFromClass(self.class)], self.fbPlacementId);
     [self.delegate interstitialCustomEventWillDisappear:self];
 }
 
