@@ -8,10 +8,6 @@
 #import <UnityAds/UnityAds.h>
 #import "UnityAdsAdapterConfiguration.h"
 #import "MPUnityRouter.h"
-#if __has_include("MoPub.h")
-#import "MoPub.h"
-#import "MPLogging.h"
-#endif
 
 // Initialization configuration keys
 static NSString * const kUnityAdsGameId = @"gameId";
