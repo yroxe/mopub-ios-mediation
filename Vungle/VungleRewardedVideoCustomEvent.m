@@ -12,6 +12,7 @@
     #import "MPError.h"
     #import "MPRewardedVideoReward.h"
     #import "MPRewardedVideoError.h"
+    #import "MoPub.h"
 #endif
 #import <VungleSDK/VungleSDK.h>
 #import "MPVungleRouter.h"
