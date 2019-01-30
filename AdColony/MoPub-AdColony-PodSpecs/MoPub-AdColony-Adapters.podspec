@@ -19,7 +19,7 @@ For inquiries and support, please email support@adcolony.com. \n
   s.ios.deployment_target = '8.0'
   s.static_framework = true
   s.subspec 'MoPub' do |ms|
-    ms.dependency 'mopub-ios-sdk', '~> 5.0'
+    ms.dependency 'mopub-ios-sdk', '~> 5.5'
   end
   s.subspec 'Network' do |ns|
     ns.source_files = 'AdColony/*.{h,m}'
