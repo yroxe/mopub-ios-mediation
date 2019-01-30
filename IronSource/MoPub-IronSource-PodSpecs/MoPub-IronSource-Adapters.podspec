@@ -24,6 +24,7 @@ end
 s.subspec 'Network' do |ns|
   ns.source_files = 'IronSource/*.{h,m}'
   ns.dependency 'IronSourceSDK','6.8.0.0'
+  ns.dependency 'mopub-ios-sdk', '~> 5.5'
 end
 end
 
