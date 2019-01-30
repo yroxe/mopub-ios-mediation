@@ -24,5 +24,6 @@ For inquiries and support, please email support@adcolony.com. \n
   s.subspec 'Network' do |ns|
     ns.source_files = 'AdColony/*.{h,m}'
     ns.dependency 'AdColony', '3.3.5'
+    ns.dependency 'mopub-ios-sdk', '~> 5.5'
   end
 end

@@ -24,5 +24,6 @@ end
 s.subspec 'Network' do |ns|
   ns.source_files = 'FacebookAudienceNetwork/*.{h,m}'
   ns.dependency 'FBAudienceNetwork', '5.1.0'
+  ns.dependency 'mopub-ios-sdk', '~> 5.5'
 end
 end

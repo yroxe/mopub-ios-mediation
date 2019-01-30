@@ -24,5 +24,6 @@ end
 s.subspec 'Network' do |ns|
   ns.source_files = 'AdMob/*.{h,m}'
   ns.dependency 'Google-Mobile-Ads-SDK', '7.37.0'
+  ns.dependency 'mopub-ios-sdk', '~> 5.5'
 end
 end

@@ -24,5 +24,6 @@ end
 s.subspec 'Network' do |ns|
   ns.source_files = 'Chartboost/*.{h,m}'
   ns.dependency 'ChartboostSDK', '7.3.0'
+  ns.dependency 'mopub-ios-sdk', '~> 5.5'
 end
 end

@@ -24,5 +24,6 @@ end
 s.subspec 'Network' do |ns|
   ns.source_files = 'UnityAds/*.{h,m}'
   ns.dependency 'UnityAds', '3.0.0'
+  ns.dependency 'mopub-ios-sdk', '~> 5.5'
 end
 end
