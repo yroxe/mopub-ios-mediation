@@ -24,5 +24,6 @@ end
 s.subspec 'Network' do |ns|
   ns.source_files = 'Tapjoy/*.{h,m}'
   ns.dependency 'TapjoySDK', '12.2.0'
+  ns.dependency 'mopub-ios-sdk', '~> 5.5'
 end
 end

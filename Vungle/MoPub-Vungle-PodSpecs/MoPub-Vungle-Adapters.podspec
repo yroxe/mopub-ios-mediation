@@ -24,5 +24,6 @@ end
 s.subspec 'Network' do |ns|
   ns.source_files ='Vungle/*.{h,m}'
   ns.dependency 'VungleSDK-iOS', '6.3.2'
+  ns.dependency 'mopub-ios-sdk', '~> 5.5'
 end
 end

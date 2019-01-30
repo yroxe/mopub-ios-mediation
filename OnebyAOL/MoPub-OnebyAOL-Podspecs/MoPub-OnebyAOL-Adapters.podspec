@@ -24,5 +24,6 @@ end
 s.subspec 'Network' do |ns|
   ns.source_files = 'OnebyAOL/*.{h,m}'
   ns.exclude_files = 'MPStaticNativeAdImpressionTimer.{h,m}'
+  ns.dependency 'mopub-ios-sdk', '~> 5.5'
 end
 end

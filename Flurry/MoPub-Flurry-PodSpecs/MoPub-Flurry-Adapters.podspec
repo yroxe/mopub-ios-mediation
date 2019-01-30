@@ -25,5 +25,6 @@ s.subspec 'Network' do |ns|
   ns.source_files = 'Flurry/*.{h,m}'
   ns.dependency 'Flurry-iOS-SDK/FlurrySDK', '9.2.1'
   ns.dependency 'Flurry-iOS-SDK/FlurryAds', '9.2.1'
+  ns.dependency 'mopub-ios-sdk', '~> 5.5'
 end
 end
