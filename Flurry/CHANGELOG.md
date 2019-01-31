@@ -1,6 +1,6 @@
 ## Changelog
   * 9.2.1.4
-    * Update the Adapter Version.
+    * Update the Adapter Version to accommodate podspec changes for Unity releases.
     
   * 9.2.1.3
     * Move source_files to the `Network` subspec. 
