@@ -1,5 +1,5 @@
 ## Changelog
-   * 6.1.4.2
+   * 6.1.4.3
      * Update Adapter Version in AppLovinAdapterConfiguration.
      
    * 6.1.4.2
