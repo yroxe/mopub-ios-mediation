@@ -1,6 +1,6 @@
 ## Changelog
   * 7.3.0.3
-      * Update Adapter Version in ChartboostAdapterConfiguration.
+      * Update Adapter Version in ChartboostAdapterConfiguration to accommodate podspec changes for Unity releases.
       
   * 7.3.0.2
       * Move source_files to the `Network` subspec.
