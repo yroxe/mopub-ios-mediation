@@ -1,6 +1,6 @@
 ## Changelog
   * 6.3.2.3
-    * Update adapter version in VungleAdapterConfiguration.
+    * Update adapter version in VungleAdapterConfiguration to accommodate podspec changes for Unity releases.
     
   * 6.3.2.2
     * Move source_files to the `Network` subspec.
