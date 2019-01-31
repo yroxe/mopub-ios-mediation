@@ -1,5 +1,8 @@
 ## Changelog
    * 6.1.4.2
+     * Update Adapter Version in AppLovinAdapterConfiguration.
+     
+   * 6.1.4.2
      * Move source_files to the `Network` subspec.
 
    * 6.1.4.1

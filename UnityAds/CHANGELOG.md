@@ -1,5 +1,8 @@
 
 ## Changelog
+* 3.0.0.3
+  * Update Adapter Version in UnityAdsAdapterConfiguration.
+  
 * 3.0.0.2
   * Move source_files to the `Network` subspec.
 

@@ -1,4 +1,7 @@
 ## Changelog
+  * 12.2.0.3
+    * Update Adapter Version in TapjoyAdapterConfiguration.
+    
   * 12.2.0.2
     * Move source_files to the `Network` subspec. 
 

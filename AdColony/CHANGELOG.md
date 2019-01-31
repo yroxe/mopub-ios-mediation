@@ -1,5 +1,8 @@
 ## Changelog
   * 3.3.5.2
+    * Update Adapter Version in AdColonyAdapterConfiguration.
+
+  * 3.3.5.2
     * Move source_files to the `Network` subspec.
 
   * 3.3.5.1
