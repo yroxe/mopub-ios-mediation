@@ -1,6 +1,6 @@
 ## Changelog
   * 3.3.5.3
-    * Update Adapter Version in AdColonyAdapterConfiguration.
+    * Update Adapter Version in AdColonyAdapterConfiguration to accommodate podspec changes for Unity releases.
 
   * 3.3.5.2
     * Move source_files to the `Network` subspec.
