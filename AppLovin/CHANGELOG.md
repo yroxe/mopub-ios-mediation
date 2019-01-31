@@ -1,6 +1,6 @@
 ## Changelog
    * 6.1.4.3
-     * Update Adapter Version in AppLovinAdapterConfiguration.
+     * Update Adapter Version in AppLovinAdapterConfiguration to accommodate podspec changes for Unity releases.
      
    * 6.1.4.2
      * Move source_files to the `Network` subspec.
