@@ -1,6 +1,6 @@
 ## Changelog
 * 5.1.0.3
-    * Update Adapter Version in FacebookAdapterConfiguration.
+    * Update Adapter Version in FacebookAdapterConfiguration to accommodate podspec changes for Unity releases.
     
 * 5.1.0.2
     * Move source_files to the `Network` subspec. 
