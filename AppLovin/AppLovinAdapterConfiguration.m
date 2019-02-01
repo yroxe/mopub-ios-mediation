@@ -54,7 +54,7 @@ typedef NS_ENUM(NSInteger, AppLovinAdapterErrorCode) {
 #pragma mark - MPAdapterConfiguration
 
 - (NSString *)adapterVersion {
-    return @"6.1.4.3";
+    return @"6.1.4.4";
 }
 
 - (NSString *)biddingToken {
