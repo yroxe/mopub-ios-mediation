@@ -1,4 +1,6 @@
 #import "AppLovinBannerCustomEvent.h"
+#import "AppLovinAdapterConfiguration.h"
+
 #if __has_include("MoPub.h")
     #import "MPConstants.h"
     #import "MPError.h"
@@ -70,8 +72,10 @@ static NSMutableDictionary<NSString *, ALAdView *> *ALGlobalAdViews;
     }
     
     self.sdk = [self SDKFromCustomEventInfo: info];
-    [self.sdk setPluginVersion: @"MoPub-3.1.0"];
     self.sdk.mediationProvider = ALMediationProviderMoPub;
+    [self.sdk setPluginVersion: AppLovinAdapterConfiguration.pluginVersion];
+    
+    [AppLovinAdapterConfiguration setCachedInitializationParameters: info];
     
     // Convert requested size to AppLovin Ad Size
     ALAdSize *adSize = [self appLovinAdSizeFromRequestedSize: size];
@@ -330,8 +334,6 @@ static NSMutableDictionary<NSString *, ALAdView *> *ALGlobalAdViews;
     NSError *error = [NSError errorWithDomain: kALMoPubMediationErrorDomain
                                          code: kALErrorCodeUnableToRenderAd
                                      userInfo: @{NSLocalizedFailureReasonErrorKey: failureReason}];
-    
-    [self.parentCustomEvent.delegate bannerCustomEvent: self.parentCustomEvent didFailToLoadAdWithError: error];
     MPLogAdEvent([MPLogEvent adShowFailedForAdapter:NSStringFromClass(self.class) error:error], [self getAdNetworkId]);
 }
 

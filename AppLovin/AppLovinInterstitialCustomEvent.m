@@ -1,4 +1,5 @@
 #import "AppLovinInterstitialCustomEvent.h"
+#import "AppLovinAdapterConfiguration.h"
 
 #if __has_include("MoPub.h")
     #import "MPError.h"
@@ -67,8 +68,10 @@ static NSObject *ALGlobalInterstitialAdsLock;
     }
     
     self.sdk = [self SDKFromCustomEventInfo: info];
-    [self.sdk setPluginVersion: @"MoPub-3.1.0"];
     self.sdk.mediationProvider = ALMediationProviderMoPub;
+    [self.sdk setPluginVersion: AppLovinAdapterConfiguration.pluginVersion];
+    
+    [AppLovinAdapterConfiguration setCachedInitializationParameters: info];
     
     BOOL hasAdMarkup = adMarkup.length > 0;
     

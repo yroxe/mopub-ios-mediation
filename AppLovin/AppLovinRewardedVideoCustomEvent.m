@@ -1,4 +1,5 @@
 #import "AppLovinRewardedVideoCustomEvent.h"
+#import "AppLovinAdapterConfiguration.h"
 
 #if __has_include("MoPub.h")
     #import "MPRewardedVideoReward.h"
@@ -68,8 +69,10 @@ static NSMutableDictionary<NSString *, ALIncentivizedInterstitialAd *> *ALGlobal
     }
     
     self.sdk = [self SDKFromCustomEventInfo: info];
-    [self.sdk setPluginVersion: @"MoPub-3.1.0"];
     self.sdk.mediationProvider = ALMediationProviderMoPub;
+    [self.sdk setPluginVersion: AppLovinAdapterConfiguration.pluginVersion];
+    
+    [AppLovinAdapterConfiguration setCachedInitializationParameters: info];
     
     BOOL hasAdMarkup = adMarkup.length > 0;
     
@@ -85,7 +88,7 @@ static NSMutableDictionary<NSString *, ALIncentivizedInterstitialAd *> *ALGlobal
     }
     
     // Create incentivized ad based off of zone
-    self.incent = [[self class] incentivizedInterstitialAdForZoneIdentifier: _zoneIdentifier
+    self.incent = [[self class] incentivizedInterstitialAdForZoneIdentifier: self.zoneIdentifier
                                                                 customEvent: self
                                                                         sdk: self.sdk];
     
@@ -240,8 +243,6 @@ static NSMutableDictionary<NSString *, ALIncentivizedInterstitialAd *> *ALGlobal
     NSString *failureReason = [NSString stringWithFormat:@"Rewarded video validation request for ad failed with error code: %ld", responseCode];
 
     NSError *error = [NSError errorWithCode:MOPUBErrorAdapterInvalid localizedDescription:failureReason];
-    
-    [self.delegate rewardedVideoDidFailToLoadAdForCustomEvent:self error:error];
     MPLogAdEvent([MPLogEvent adLoadFailedForAdapter:NSStringFromClass(self.class) error:error], [self getAdNetworkId]);
 }
 
@@ -250,8 +251,6 @@ static NSMutableDictionary<NSString *, ALIncentivizedInterstitialAd *> *ALGlobal
     NSString *failureReason = [NSString stringWithFormat: @"Rewarded video validation request was rejected with response: %@", response];
 
     NSError *error = [NSError errorWithCode:MOPUBErrorAdapterInvalid localizedDescription:failureReason];
-    
-    [self.delegate rewardedVideoDidFailToLoadAdForCustomEvent:self error:error];
     MPLogAdEvent([MPLogEvent adLoadFailedForAdapter:NSStringFromClass(self.class) error:error], [self getAdNetworkId]);
 }
 
