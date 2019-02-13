@@ -1,4 +1,8 @@
 ## Changelog
+* 5.2.0.0
+     * Add `FacebookNativeRenderer` class for publishers seeking a more hands off approach when integrating Native Ads. This renderer will use a predefined layout that will adapt to the size of the ad container. Supported size is 200x200 and bigger.
+     * Replace `FBAdChoicesView` class with `FBAdOptionsView`.
+
 * 5.1.0.4
     * Adapters now fetch only the core MoPub iOS SDK (excluding viewability SDKs). Publishers wishing to integrate viewability should fetch the `mopub-ios-sdk` dependency in their own Podfile.
 
