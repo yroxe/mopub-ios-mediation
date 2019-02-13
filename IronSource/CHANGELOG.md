@@ -1,4 +1,7 @@
 ## Changelog
+ * 6.8.1.0.0
+    * This version of the adapters has been certified with IronSource 6.8.1.0.
+    
  * 6.8.0.0.4
     * Adapters now fetch only the core MoPub iOS SDK (excluding viewability SDKs). Publishers wishing to integrate viewability should fetch the `mopub-ios-sdk` dependency in their own Podfile.
 
