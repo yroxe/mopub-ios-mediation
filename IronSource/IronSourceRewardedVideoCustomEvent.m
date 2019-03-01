@@ -86,8 +86,8 @@ static BOOL initRewardedVideoSuccessfully = NO;
         NSError *error = [self createErrorWith:@"IronSource adapter failed to request rewarded video"
                                      andReason:@"no more fill"
                                  andSuggestion:@""];
-        [strongDelegate rewardedVideoDidFailToPlayForCustomEvent:self error:error];
         MPLogAdEvent([MPLogEvent adShowFailedForAdapter:NSStringFromClass(self.class) error:error], self.instanceId);
+        [strongDelegate rewardedVideoDidFailToPlayForCustomEvent:self error:error];
     }
 }
 

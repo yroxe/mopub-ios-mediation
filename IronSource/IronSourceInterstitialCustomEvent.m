@@ -63,9 +63,8 @@ static BOOL initInterstitialSuccessfully;
                                      andReason:@"ApplicationKey parameter is missing"
                                  andSuggestion:@"Make sure that 'applicationKey' server parameter is added"];
         
-        [self.delegate interstitialCustomEvent:self didFailToLoadAdWithError:error];
-        MPLogInfo(@"IronSource adapter failed to requestInterstitial, 'applicationKey' parameter is missing. make sure that 'applicationKey' server parameter is added");
         MPLogAdEvent([MPLogEvent adLoadFailedForAdapter:NSStringFromClass(self.class) error:error], self.instanceId);
+        [self.delegate interstitialCustomEvent:self didFailToLoadAdWithError:error];
     }
 }
 

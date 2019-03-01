@@ -1,4 +1,7 @@
 ## Changelog
+ * 6.8.1.0.1
+    * Log load failure before calling delegate method `rewardedVideoDidFailToLoadAdForCustomEvent` to fix crash due to dangling pointer.
+    
  * 6.8.1.0.0
     * This version of the adapters has been certified with IronSource 6.8.1.0.
     
