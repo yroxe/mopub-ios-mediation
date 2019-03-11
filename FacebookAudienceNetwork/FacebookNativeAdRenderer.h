@@ -22,8 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, readonly) MPNativeViewSizeHandler viewSizeHandler;
 
-+ (MPNativeAdRendererConfiguration *)rendererConfigurationWithRendererSettings:(id<MPStaticNativeAdRendererSettings>)rendererSettings;
-
++ (MPNativeAdRendererConfiguration *)rendererConfigurationWithRendererSettings:(id<MPNativeAdRendererSettings>)rendererSettings;
 @end
 
 NS_ASSUME_NONNULL_END
