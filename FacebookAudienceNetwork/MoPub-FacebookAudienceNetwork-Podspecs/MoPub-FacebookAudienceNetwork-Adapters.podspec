@@ -26,3 +26,4 @@ s.subspec 'Network' do |ns|
   ns.dependency 'mopub-ios-sdk/Core', '~> 5.5'
   ns.dependency 'FBAudienceNetwork', '5.2.0'
 end
+end
