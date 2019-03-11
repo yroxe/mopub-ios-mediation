@@ -34,7 +34,7 @@
 #pragma mark - MPAdapterConfiguration
 
 - (NSString *)adapterVersion {
-    return @"5.1.0.4";
+    return @"5.2.0.0";
 }
 
 - (NSString *)biddingToken {
@@ -47,7 +47,7 @@
 
 - (NSString *)networkSdkVersion {
     // `FBAdSettings` has no API to retrieve the Facebook Audience Network SDK version
-    return @"5.0.1";
+    return @"5.2.0";
 }
 
 - (void)initializeNetworkWithConfiguration:(NSDictionary<NSString *, id> *)configuration
