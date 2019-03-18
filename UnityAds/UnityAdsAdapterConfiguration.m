@@ -7,7 +7,7 @@
 
 #import <UnityAds/UnityAds.h>
 #import "UnityAdsAdapterConfiguration.h"
-#import "MPUnityRouter.h"
+#import "UnityRouter.h"
 #if __has_include("MoPub.h")
 #import "MPLogging.h"
 #endif
@@ -40,7 +40,7 @@ typedef NS_ENUM(NSInteger, UnityAdsAdapterErrorCode) {
 #pragma mark - MPAdapterConfiguration
 
 - (NSString *)adapterVersion {
-    return @"3.0.0.4";
+    return @"3.0.0.5";
 }
 
 - (NSString *)biddingToken {
@@ -68,7 +68,7 @@ typedef NS_ENUM(NSInteger, UnityAdsAdapterErrorCode) {
         return;
     }
     
-    [[MPUnityRouter sharedRouter] initializeWithGameId:gameId];
+    [[UnityRouter sharedRouter] initializeWithGameId:gameId];
     if (complete != nil) {
         complete(nil);
     }
