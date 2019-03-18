@@ -1,6 +1,6 @@
 #import <Chartboost/Chartboost.h>
 #import "ChartboostAdapterConfiguration.h"
-#import "MPChartboostRouter.h"
+#import "ChartboostRouter.h"
 
 #if __has_include("MoPub.h")
 #import "MPLogging.h"
@@ -37,7 +37,7 @@ typedef NS_ENUM(NSInteger, ChartboostAdapterErrorCode) {
 #pragma mark - MPAdapterConfiguration
 
 - (NSString *)adapterVersion {
-    return @"7.3.0.4";
+    return @"7.3.0.5";
 }
 
 - (NSString *)biddingToken {
@@ -78,7 +78,7 @@ typedef NS_ENUM(NSInteger, ChartboostAdapterErrorCode) {
     }
     
     // Initialize the router
-    [[MPChartboostRouter sharedRouter] startWithAppId:appId appSignature:appSignature];
+    [[ChartboostRouter sharedRouter] startWithAppId:appId appSignature:appSignature];
     if (complete != nil) {
         complete(nil);
     }
