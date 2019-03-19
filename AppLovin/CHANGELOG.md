@@ -1,4 +1,7 @@
 ## Changelog
+   * 6.2.0.1
+     * Persist the AppLovin SDK Key for Unity publishers without access to set it in the project's info.plist. Click [here](https://developers.mopub.com/publishers/mediation/networks/applovin/#download-and-integration) for further implementation instructions.
+
    * 6.2.0.0
      * This version of the adapters has been certified with AppLovin SDK 6.2.0.
      * Addressed some issues and optimized adapter:
