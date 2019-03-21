@@ -126,8 +126,8 @@ static BOOL initInterstitialSuccessfully;
     if(![self.instanceId isEqualToString:instanceId])
         return;
     
-    [self.delegate interstitialCustomEvent:self didLoadAd:nil];
     MPLogAdEvent([MPLogEvent adLoadSuccessForAdapter:NSStringFromClass(self.class)], self.instanceId);
+    [self.delegate interstitialCustomEvent:self didLoadAd:nil];
 }
 
 /*!
@@ -145,9 +145,9 @@ static BOOL initInterstitialSuccessfully;
                             andReason:@"IronSource network failed to load"
                         andSuggestion:@"Check that your network configuration are according to the documentation."];
     }
-    
-    [self.delegate interstitialCustomEvent:self didFailToLoadAdWithError:error];
+
     MPLogAdEvent([MPLogEvent adLoadFailedForAdapter:NSStringFromClass(self.class) error:error], self.instanceId);
+    [self.delegate interstitialCustomEvent:self didFailToLoadAdWithError:error];
 }
 
 /*!
@@ -193,8 +193,8 @@ static BOOL initInterstitialSuccessfully;
  *              You can learn about the reason by examining the ‘error’ value
  */
 - (void)interstitialDidFailToShowWithError:(NSError *)error instanceId:(NSString *)instanceId {
-    [self.delegate interstitialCustomEvent:self didFailToLoadAdWithError:error];
     MPLogAdEvent([MPLogEvent adShowFailedForAdapter:NSStringFromClass(self.class) error:error], self.instanceId);
+    [self.delegate interstitialCustomEvent:self didFailToLoadAdWithError:error];
 
 }
 
@@ -205,8 +205,8 @@ static BOOL initInterstitialSuccessfully;
     
     id<MPInterstitialCustomEventDelegate> strongDelegate = self.delegate;
     [strongDelegate interstitialCustomEventDidReceiveTapEvent:self];
-    [strongDelegate interstitialCustomEventWillLeaveApplication:self];
     MPLogAdEvent([MPLogEvent adTappedForAdapter:NSStringFromClass(self.class)], self.instanceId);
+    [strongDelegate interstitialCustomEventWillLeaveApplication:self];
 }
 
 @end
