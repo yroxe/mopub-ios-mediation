@@ -1,5 +1,9 @@
 
 ## Changelog
+* 3.0.1.0
+  * This version of the adapters has been certified with Unity Ads 3.0.1.
+  * Includes checks for Unity Ads availability to avoid timeouts.
+  
 * 3.0.0.5
   * Rename `MPUnityRouter` to `UnityRouter` for consistency with other adapter class names. 
 
