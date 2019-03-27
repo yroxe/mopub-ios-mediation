@@ -7,6 +7,7 @@
 #endif
 
 #if __has_include("MoPub.h")
+    #import "MoPub.h"
     #import "MPLogging.h"
 #endif
 
