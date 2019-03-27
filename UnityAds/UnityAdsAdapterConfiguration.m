@@ -9,6 +9,7 @@
 #import "UnityAdsAdapterConfiguration.h"
 #import "UnityRouter.h"
 #if __has_include("MoPub.h")
+#import "MoPub.h"
 #import "MPLogging.h"
 #endif
 
@@ -40,7 +41,7 @@ typedef NS_ENUM(NSInteger, UnityAdsAdapterErrorCode) {
 #pragma mark - MPAdapterConfiguration
 
 - (NSString *)adapterVersion {
-    return @"3.0.1.0";
+    return @"3.0.1.1";
 }
 
 - (NSString *)biddingToken {
@@ -72,6 +73,11 @@ typedef NS_ENUM(NSInteger, UnityAdsAdapterErrorCode) {
     if (complete != nil) {
         complete(nil);
     }
+    
+    MPBLogLevel * logLevel = [[MoPub sharedInstance] logLevel];
+    BOOL debugModeEnabled = logLevel == MPBLogLevelDebug;
+
+    [UnityAds setDebugMode:debugModeEnabled];
 }
 
 @end
