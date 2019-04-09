@@ -102,7 +102,17 @@
 }
 
 -(void)dealloc{
+    [self cancelExpirationTimer];
     self.fbRewardedVideoAd.delegate = nil;
+}
+
+-(void)cancelExpirationTimer
+{
+    if (_expirationTimer != nil)
+    {
+        [self.expirationTimer invalidate];
+        self.expirationTimer = nil;
+    }
 }
 
 #pragma mark FBRewardedVideoAdDelegate methods
@@ -131,6 +141,9 @@
  */
 - (void)rewardedVideoAdDidLoad:(FBRewardedVideoAd *)rewardedVideoAd
 {
+    
+    [self cancelExpirationTimer];
+
     [self.delegate rewardedVideoDidLoadAdForCustomEvent:self ];
     MPLogAdEvent([MPLogEvent adLoadSuccessForAdapter:NSStringFromClass(self.class)], self.fbPlacementId);
     
@@ -149,7 +162,6 @@
 
             strongSelf.fbRewardedVideoAd = nil;
         }
-        [strongSelf.expirationTimer invalidate];
     }];
     [self.expirationTimer scheduleNow];
 }
@@ -204,6 +216,8 @@
  */
 - (void)rewardedVideoAd:(FBRewardedVideoAd *)rewardedVideoAd didFailWithError:(NSError *)error
 {
+    [self cancelExpirationTimer];
+
     MPLogAdEvent([MPLogEvent adLoadFailedForAdapter:NSStringFromClass(self.class) error:error], nil);
     [self.delegate rewardedVideoDidFailToLoadAdForCustomEvent:self error:error];
 }
@@ -234,10 +248,11 @@
  */
 - (void)rewardedVideoAdWillLogImpression:(FBRewardedVideoAd *)rewardedVideoAd
 {
+    [self cancelExpirationTimer];
+
     MPLogAdEvent([MPLogEvent adShowSuccessForAdapter:NSStringFromClass(self.class)], self.fbPlacementId);
     //set the tracker to true when the ad is shown on the screen. So that the timer is invalidated.
     _hasTrackedImpression = true;
-    [self.expirationTimer invalidate];
 }
 
 @end
