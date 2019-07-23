@@ -87,7 +87,7 @@ static NSMutableDictionary<NSString *, ALAdView *> *ALGlobalAdViews;
         zoneIdentifier = ZONE_FROM_INFO(info);
         
         // Create adview based off of zone (if any)
-        self.adView = [[self class] adViewForFrame: CGRectMake(0, 0, size.width, size.height)
+        self.adView = [[self class] adViewForFrame: CGRectMake(0, 0, adSize.width, adSize.height)
                                             adSize: adSize
                                     zoneIdentifier: zoneIdentifier
                                        customEvent: self
@@ -131,37 +131,20 @@ static NSMutableDictionary<NSString *, ALAdView *> *ALGlobalAdViews;
 
 - (ALAdSize *)appLovinAdSizeFromRequestedSize:(CGSize)size
 {
-    if ( CGSizeEqualToSize(size, MOPUB_BANNER_SIZE) )
-    {
-        return [ALAdSize sizeBanner];
-    }
-    else if ( CGSizeEqualToSize(size, MOPUB_MEDIUM_RECT_SIZE) )
-    {
-        return [ALAdSize sizeMRec];
-    }
-    else if ( CGSizeEqualToSize(size, MOPUB_LEADERBOARD_SIZE) )
-    {
-        return [ALAdSize sizeLeader];
-    }
-    // This is not a one of MoPub's predefined size
-    else
-    {
-        // Assume fluid width, and check for height with offset tolerance
-        
-        CGFloat bannerOffset = ABS(kALBannerStandardHeight - size.height);
-        CGFloat leaderOffset = ABS(kALLeaderStandardHeight - size.height);
-        
-        if ( bannerOffset <= kALBannerHeightOffsetTolerance )
-        {
-            return [ALAdSize sizeBanner];
-        }
-        else if ( leaderOffset <= kALLeaderHeightOffsetTolerance )
-        {
-            return [ALAdSize sizeLeader];
-        }
+    // Default to standard banner size
+    ALAdSize * adSize = [ALAdSize sizeBanner];
+    
+    // Size can contain an AppLovin leaderboard ad size of 728x90
+    if (size.width >= 728 && size.height >= 90) {
+        adSize = [ALAdSize sizeLeader];
     }
     
-    return nil;
+    // Size can contain an AppLovin medium rectangle
+    if (size.width >= 300 && size.height >= 250) {
+        adSize = [ALAdSize sizeMRec];
+    }
+    
+    return adSize;
 }
 
 - (MOPUBErrorCode)toMoPubErrorCode:(int)appLovinErrorCode
