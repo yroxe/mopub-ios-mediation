@@ -24,6 +24,6 @@ For inquiries and support, please visit https://www.applovin.com/support \n
   s.subspec 'Network' do |ns|
     ns.source_files = 'Applovin/*.{h,m}'
     ns.dependency 'AppLovinSDK', '6.7.1'
-    ns.dependency 'mopub-ios-sdk/Core', '~> 5.6'
+    ns.dependency 'mopub-ios-sdk/Core', '~> 5.8'
   end
 end
