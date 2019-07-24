@@ -73,37 +73,34 @@ static NSMutableDictionary<NSString *, ALAdView *> *ALGlobalAdViews;
     [AppLovinAdapterConfiguration setCachedInitializationParameters: info];
     // Convert requested size to AppLovin Ad Size
     ALAdSize *adSize = [self appLovinAdSizeFromRequestedSize: size];
-    if ( adSize )
+    BOOL hasAdMarkup = adMarkup.length > 0;
+    
+    MPLogInfo(@"Requesting AppLovin banner of size %@ with info: %@ and with ad markup: %d", NSStringFromCGSize(size), info, hasAdMarkup);
+    
+    zoneIdentifier = ZONE_FROM_INFO(info);
+    
+    // Create adview based off of zone (if any)
+    self.adView = [[self class] adViewForFrame: CGRectMake(0, 0, adSize.width, adSize.height)
+                                        adSize: adSize
+                                zoneIdentifier: zoneIdentifier
+                                   customEvent: self
+                                           sdk: self.sdk];
+    
+    // Use token API
+    if ( hasAdMarkup )
     {
-        BOOL hasAdMarkup = adMarkup.length > 0;
+        // Ad load delegate attached to Ad Service as well as adview
+        AppLovinMoPubTokenBannerDelegate *tokenDelegate = [[AppLovinMoPubTokenBannerDelegate alloc] initWithCustomEvent: self];
+        [self.sdk.adService loadNextAdForAdToken: adMarkup andNotify: tokenDelegate];
         
-        MPLogInfo(@"Requesting AppLovin banner of size %@ with info: %@ and with ad markup: %d", NSStringFromCGSize(size), info, hasAdMarkup);
+        MPLogAdEvent([MPLogEvent adLoadAttemptForAdapter:NSStringFromClass(self.class) dspCreativeId:nil dspName:nil], zoneIdentifier);
+    }
+    // Zone/regular ad load
+    else
+    {
+        [self.adView loadNextAd];
         
-        zoneIdentifier = ZONE_FROM_INFO(info);
-        
-        // Create adview based off of zone (if any)
-        self.adView = [[self class] adViewForFrame: CGRectMake(0, 0, adSize.width, adSize.height)
-                                            adSize: adSize
-                                    zoneIdentifier: zoneIdentifier
-                                       customEvent: self
-                                               sdk: self.sdk];
-        
-        // Use token API
-        if ( hasAdMarkup )
-        {
-            // Ad load delegate attached to Ad Service as well as adview
-            AppLovinMoPubTokenBannerDelegate *tokenDelegate = [[AppLovinMoPubTokenBannerDelegate alloc] initWithCustomEvent: self];
-            [self.sdk.adService loadNextAdForAdToken: adMarkup andNotify: tokenDelegate];
-            
-            MPLogAdEvent([MPLogEvent adLoadAttemptForAdapter:NSStringFromClass(self.class) dspCreativeId:nil dspName:nil], zoneIdentifier);
-        }
-        // Zone/regular ad load
-        else
-        {
-            [self.adView loadNextAd];
-            
-            MPLogAdEvent([MPLogEvent adLoadAttemptForAdapter:NSStringFromClass(self.class) dspCreativeId:nil dspName:nil], zoneIdentifier);
-        }
+        MPLogAdEvent([MPLogEvent adLoadAttemptForAdapter:NSStringFromClass(self.class) dspCreativeId:nil dspName:nil], zoneIdentifier);
     }
     else
     {
@@ -132,10 +129,8 @@ static NSMutableDictionary<NSString *, ALAdView *> *ALGlobalAdViews;
     // Size can contain an AppLovin leaderboard ad size of 728x90
     if (size.width >= 728 && size.height >= 90) {
         adSize = [ALAdSize sizeLeader];
-    }
-    
-    // Size can contain an AppLovin medium rectangle
-    if (size.width >= 300 && size.height >= 250) {
+    } else if (size.width >= 300 && size.height >= 250) {
+        // Size can contain an AppLovin medium rectangle
         adSize = [ALAdSize sizeMRec];
     }
     
