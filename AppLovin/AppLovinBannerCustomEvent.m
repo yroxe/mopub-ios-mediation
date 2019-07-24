@@ -41,11 +41,6 @@
 static NSString *const kALMoPubMediationErrorDomain = @"com.applovin.sdk.mediation.mopub.errorDomain";
 static NSString *zoneIdentifier;
 
-static const CGFloat kALBannerHeightOffsetTolerance = 10.0f;
-static const CGFloat kALBannerStandardHeight = 50.0f;
-static const CGFloat kALLeaderHeightOffsetTolerance = 16.0f;
-static const CGFloat kALLeaderStandardHeight = 90.0f;
-
 // A dictionary of Zone -> AdView to be shared by instances of the custom event.
 static NSMutableDictionary<NSString *, ALAdView *> *ALGlobalAdViews;
 
