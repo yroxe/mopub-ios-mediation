@@ -19,7 +19,7 @@ For inquiries and support, please visit https://www.applovin.com/support \n
   s.ios.deployment_target = '9.0'
   s.static_framework = true
   s.subspec 'MoPub' do |ms|
-    ms.dependency 'mopub-ios-sdk/Core', '~> 5.6'
+    ms.dependency 'mopub-ios-sdk/Core', '~> 5.8'
   end
   s.subspec 'Network' do |ns|
     ns.source_files = 'Applovin/*.{h,m}'
