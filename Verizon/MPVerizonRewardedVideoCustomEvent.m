@@ -37,7 +37,7 @@ static NSString *const kMoPubVASAdapterVideoCompleteEventId = @"onVideoComplete"
     return self;
 }
 
-- (void)requestRewardedVideoWithCustomEventInfo:(NSDictionary<NSString *, id> *)info
+- (void)requestRewardedVideoWithCustomEventInfo:(NSDictionary<NSString *, id> *)info adMarkup:(NSString *)adMarkup
 {
     MPLogAdEvent([MPLogEvent adLoadAttemptForAdapter:NSStringFromClass(self.class) dspCreativeId:nil dspName:nil], self.siteId);
     

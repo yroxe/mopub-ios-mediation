@@ -34,7 +34,7 @@
     MPLogTrace(@"Deallocating %@.", self);
 }
 
-- (void)requestAdWithCustomEventInfo:(NSDictionary *)info
+- (void)requestAdWithCustomEventInfo:(NSDictionary *)info adMarkup:(NSString *)adMarkup
 {
     MPLogAdEvent([MPLogEvent adLoadAttemptForAdapter:NSStringFromClass(self.class) dspCreativeId:nil dspName:nil], self.siteId);
     

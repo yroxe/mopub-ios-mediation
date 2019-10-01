@@ -1,4 +1,7 @@
 ## Changelog
+ * 1.1.4.2
+    * Stop implementing deprecated request API.
+
  * 1.1.4.1
     * Add support for rewarded video and native ad formats.
     
