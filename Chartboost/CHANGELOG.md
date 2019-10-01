@@ -1,4 +1,7 @@
 ## Changelog
+  * 8.0.1.1
+      * Stop implementing deprecated request API.
+
   * 8.0.1.0
       * This version of the adapters has been certified with Chartboost 8.0.1.
       * Added banner adapter.
