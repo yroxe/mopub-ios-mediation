@@ -1,4 +1,8 @@
 ## Changelog
+  * 10.0.2.0
+    * This version of adapters has been certified with Flurry 10.0.2.
+    * Stop implementing deprecated request API.
+
   * 10.0.0.0
     * This version is adapters has been certified with Flurry 10.0.0 and is compatible with iOS 13.
     
