@@ -1,4 +1,10 @@
 ## Changelog
+* 6.8.6.0.0
+    * This version of the adapters has been certified with ironSource 6.8.6.0 and is compatible with iOS 13.
+
+* 6.8.5.0.1
+    * Stop implementing deprecated request API.
+
 * 6.8.5.0.0
     * This version of the adapters has been certified with ironSource 6.8.5.0.
 
