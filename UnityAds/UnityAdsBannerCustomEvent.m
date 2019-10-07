@@ -30,7 +30,7 @@ static NSString *const kUnityAdsOptionZoneIdKey = @"zoneId";
     [UnityAdsBanner destroy];
 }
 
--(void)requestAdWithSize:(CGSize)size customEventInfo:(NSDictionary *)info {
+-(void)requestAdWithSize:(CGSize)size customEventInfo:(NSDictionary *)info adMarkup:(NSString *)adMarkup {
     NSString *gameId = info[kMPUnityBannerGameId];
     self.placementId = info[kUnityAdsOptionPlacementIdKey];
     if (self.placementId == nil) {
