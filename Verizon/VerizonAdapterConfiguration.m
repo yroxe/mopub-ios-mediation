@@ -2,13 +2,11 @@
 #import <VerizonAdsCore/VerizonAdsCore.h>
 #import "VerizonAdapterConfiguration.h"
 
-NSString * const kMoPubVASAdapterVersion = @"1.2.0.0";
+NSString * const kMoPubVASAdapterVersion = @"1.2.0.1";
 
 NSString * const kMoPubVASAdapterErrorWho = @"MoPubVASAdapter";
 NSString * const kMoPubVASAdapterPlacementId = @"placementId";
 NSString * const kMoPubVASAdapterSiteId = @"siteId";
-NSString * const kMoPubMillennialAdapterPlacementId = @"adUnitID";
-NSString * const kMoPubMillennialAdapterSiteId = @"dcn";
 
 NSErrorDomain const kMoPubVASAdapterErrorDomain = @"com.verizon.ads.mopubvasadapter.ErrorDomain";
 NSTimeInterval kMoPubVASAdapterSATimeoutInterval = 600;
@@ -79,15 +77,6 @@ NSTimeInterval kMoPubVASAdapterSATimeoutInterval = 600;
     NSRange range = [adapterVersion rangeOfString:@"." options:NSBackwardsSearch];
     
     return adapterVersion.length > range.location ? [adapterVersion substringToIndex:range.location] : @"";
-}
-
-@end
-
-@implementation MillennialAdapterConfiguration
-
-- (NSString *)moPubNetworkName
-{
-    return @"Millennial";
 }
 
 @end

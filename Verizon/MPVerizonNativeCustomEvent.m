@@ -38,16 +38,7 @@
     __strong __typeof__(self.delegate) delegate = self.delegate;
     
     self.siteId = info[kMoPubVASAdapterSiteId];
-    if (self.siteId.length == 0)
-    {
-        self.siteId = info[kMoPubMillennialAdapterSiteId];
-    }
-    
     NSString *placementId = info[kMoPubVASAdapterPlacementId];
-    if (placementId.length == 0)
-    {
-        placementId = info[kMoPubMillennialAdapterPlacementId];
-    }
     
     if (self.siteId.length == 0 || placementId.length == 0)
     {
@@ -125,7 +116,4 @@
     });
 }
 
-@end
-
-@implementation MillennialNativeCustomEvent
 @end

@@ -19,7 +19,7 @@
     MPNativeAdRendererConfiguration *config = [[MPNativeAdRendererConfiguration alloc] init];
     config.rendererClass = [self class];
     config.rendererSettings = rendererSettings;
-    config.supportedCustomEvents = @[@"MPVerizonNativeCustomEvent", @"MillennialNativeCustomEvent"];
+    config.supportedCustomEvents = @[@"MPVerizonNativeCustomEvent"];
     
     return config;
 }
