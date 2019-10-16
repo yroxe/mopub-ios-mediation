@@ -1,4 +1,7 @@
 ## Changelog
+* 5.6.0.0
+* This version of the adapters has been certified with Facebook Audience Network 5.6.0
+
 * 5.5.1.0
     * This version of the adapters has been certified with Facebook Audience Network 5.5.1 and is compatible with iOS 13.
 
