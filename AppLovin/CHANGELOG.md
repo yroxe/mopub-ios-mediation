@@ -1,4 +1,7 @@
 ## Changelog
+   * 6.9.5.0
+     * This version of the adapters has been certified with AppLovin SDK 6.9.5.
+
    * 6.9.4.1
      * Fail fast when the AppLovin SDK Key is not inputted.
 
