@@ -52,7 +52,10 @@ static NSString *const kUnityAdsOptionZoneIdKey = @"zoneId";
     BOOL isMediumRectangleFormat = (format != nil ? [[format lowercaseString] containsString:@"medium_rectangle"] : NO);
     
     if (isMediumRectangleFormat) {
-        NSError *error = [NSError errorWithCode:MOPUBErrorAdapterFailedToLoadAd localizedDescription:@"Invalid ad format request received. UnityAds only supports banner ads. Ensure the format type of your MoPub adunit is banner and not Medium Rectangle"];
+        NSError *error = [self createErrorWith:@"Invalid ad format request received"
+                                     andReason:@"UnityAds only supports banner ads"
+                                 andSuggestion:@"Ensure the format type of your MoPub adunit is banner and not Medium Rectangle."];
+        
         MPLogAdEvent([MPLogEvent adLoadFailedForAdapter:NSStringFromClass(self.class) error:error], nil);
         [self.delegate bannerCustomEvent:self didFailToLoadAdWithError:nil];
         
