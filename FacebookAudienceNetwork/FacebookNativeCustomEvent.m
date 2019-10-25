@@ -42,6 +42,7 @@ static const NSInteger FacebookNoFillErrorCode = 1001;
         self.fbNativeAdBase = [[FBNativeBannerAd alloc] initWithPlacementID:self.fbPlacementId];
             ((FBNativeBannerAd *) self.fbNativeAdBase).delegate = self;
         } else {
+        self.fbNativeAdBase = [[FBNativeAd alloc] initWithPlacementID:self.fbPlacementId];
             ((FBNativeAd *) self.fbNativeAdBase).delegate = self;
         }
         [FBAdSettings setMediationService:[FacebookAdapterConfiguration mediationString]];
