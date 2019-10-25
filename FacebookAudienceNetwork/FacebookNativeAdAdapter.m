@@ -106,7 +106,7 @@
 {
     if ([_fbNativeAdBase class] == [FBNativeBannerAd class]){
     [((FBNativeBannerAd *) self.fbNativeAdBase) registerViewForInteraction:view  iconView:self.iconView viewController:[self.delegate viewControllerForPresentingModalView]];
-    } else if ([_fbNativeAdBase class] == [FBNativeBannerAd class]){
+    } else if ([_fbNativeAdBase class] == [FBNativeAd class]){
         [((FBNativeAd *) self.fbNativeAdBase) registerViewForInteraction:view  mediaView:self.mediaView iconView:self.iconView viewController:[self.delegate viewControllerForPresentingModalView]];
     }
 }
