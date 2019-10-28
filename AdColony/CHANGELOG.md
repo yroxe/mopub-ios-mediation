@@ -1,4 +1,7 @@
 ## Changelog
+  * 4.1.2.0
+    * This version of the adapters has been certified with AdColony 4.1.2 and is compatible with iOS 13.
+  
   * 3.3.8.1.2
     * Stop implementing deprecated request API.
 
