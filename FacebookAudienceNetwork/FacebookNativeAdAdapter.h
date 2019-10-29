@@ -13,7 +13,7 @@
     #import "MPNativeAdAdapter.h"
 #endif
 
-@class FBNativeAd;
+@class FBNativeAdBase;
 
 @interface FacebookNativeAdAdapter : NSObject <MPNativeAdAdapter>
 

@@ -35,35 +35,52 @@ static const NSInteger FacebookNoFillErrorCode = 1001;
 - (void)requestAdWithCustomEventInfo:(NSDictionary *)info adMarkup:(NSString *)adMarkup
 {
      self.fbPlacementId = [info objectForKey:@"placement_id"];
-     self.isNativeBanner =[info valueForKey:@"is_native_banner"];
 
     if (self.fbPlacementId) {
-        if (self.isNativeBanner){
-        self.fbNativeAdBase = [[FBNativeBannerAd alloc] initWithPlacementID:self.fbPlacementId];
-            ((FBNativeBannerAd *) self.fbNativeAdBase).delegate = self;
-        } else {
+        if (self.localExtras != nil && [self.localExtras count] > 0) {
+            self.isNativeBanner = [[self.localExtras objectForKey:@"native_banner"] boolValue];
+        }
+        
+        self.isNativeBanner = self.isNativeBanner == nil ? FacebookAdapterConfiguration.isNativeBanner : self.isNativeBanner;
+        
+        if (self.isNativeBanner != nil) {
+            if (self.isNativeBanner) {
+                self.fbNativeAdBase = [[FBNativeBannerAd alloc] initWithPlacementID:self.fbPlacementId];
+                    ((FBNativeBannerAd *) self.fbNativeAdBase).delegate = self;
+
+                [self loadAdWithMarkup:adMarkup];
+
+                return;
+            }
+        }
+        
         self.fbNativeAdBase = [[FBNativeAd alloc] initWithPlacementID:self.fbPlacementId];
-            ((FBNativeAd *) self.fbNativeAdBase).delegate = self;
-        }
-        [FBAdSettings setMediationService:[FacebookAdapterConfiguration mediationString]];
+        ((FBNativeAd *) self.fbNativeAdBase).delegate = self;
 
-        // Load the advanced bid payload.
-        if (adMarkup != nil) {
-            MPLogInfo(@"Loading Facebook native ad markup for Advanced Bidding");
-            [self.fbNativeAdBase loadAdWithBidPayload:adMarkup];
-
-            MPLogAdEvent([MPLogEvent adLoadAttemptForAdapter:NSStringFromClass(self.class) dspCreativeId:nil dspName:nil], self.fbPlacementId);
-        }
-        else {
-            MPLogInfo(@"Loading Facebook native ad");
-            [self.fbNativeAdBase loadAd];
-
-            MPLogAdEvent([MPLogEvent adLoadAttemptForAdapter:NSStringFromClass(self.class) dspCreativeId:nil dspName:nil], self.fbPlacementId);
-        }
+        [self loadAdWithMarkup:adMarkup];
     } else {
         [self.delegate nativeCustomEvent:self didFailToLoadAdWithError:MPNativeAdNSErrorForInvalidAdServerResponse(@"Invalid Facebook placement ID")];
         MPLogAdEvent([MPLogEvent adLoadFailedForAdapter:NSStringFromClass(self.class) error:MPNativeAdNSErrorForInvalidAdServerResponse(@"Invalid Facebook placement ID")], self.fbPlacementId);
     }
+}
+
+- (void)loadAdWithMarkup:(NSString *)markup
+{
+    // Load the advanced bid payload.
+    if (markup != nil) {
+        MPLogInfo(@"Loading Facebook native ad markup for Advanced Bidding");
+        [self.fbNativeAdBase loadAdWithBidPayload:markup];
+
+        MPLogAdEvent([MPLogEvent adLoadAttemptForAdapter:NSStringFromClass(self.class) dspCreativeId:nil dspName:nil], self.fbPlacementId);
+    }
+    else {
+        MPLogInfo(@"Loading Facebook native ad");
+        [self.fbNativeAdBase loadAd];
+
+        MPLogAdEvent([MPLogEvent adLoadAttemptForAdapter:NSStringFromClass(self.class) dspCreativeId:nil dspName:nil], self.fbPlacementId);
+    }
+    
+    [FBAdSettings setMediationService:[FacebookAdapterConfiguration mediationString]];
 }
 
 #pragma mark - FBNativeAdDelegate
