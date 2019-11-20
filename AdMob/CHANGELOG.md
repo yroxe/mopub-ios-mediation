@@ -1,4 +1,7 @@
 ## Changelog
+  * 7.52.0.2
+    * Map banner ad sizes starting from largest height x width.
+
   * 7.52.0.1
     * Expose `setNpaString:` in `GoogleAdMobAdapterConfiguration.h` so publishers can set a new npa without re-initializing the MoPub SDK. 
 
