@@ -1,5 +1,8 @@
 
 ## Changelog
+* 3.4.0.1
+  * Log Unity Ads placement Id in the ad lifecycle events.
+
 * 3.4.0.0
   * This version of the adapters has been certified with Untiy Ads 3.4.0.
   
