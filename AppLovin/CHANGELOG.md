@@ -1,4 +1,24 @@
 ## Changelog
+   * 6.11.0.0
+     * This version of the adapters has been certified with AppLovin SDK 6.11.0.
+  
+   * 6.10.2.0
+     * This version of the adapters has been certified with AppLovin SDK 6.10.2.
+     * Fix compiler warnings.
+
+   * 6.10.1.0
+     * This version of the adapters has been certified with AppLovin SDK 6.10.1.
+
+   * 6.10.0.0
+     * This version of the adapters has been certified with AppLovin SDK 6.10.0.
+     * Remove the ability to test and query test mode as it was deprecated in v6.10.0 of the AppLovin SDK.
+
+   * 6.9.5.0
+     * This version of the adapters has been certified with AppLovin SDK 6.9.5.
+
+   * 6.9.4.1
+     * Fail fast when the AppLovin SDK Key is not inputted.
+
    * 6.9.4.0
      * This version of the adapters has been certified with AppLovin SDK 6.9.4.
 

@@ -22,14 +22,12 @@ typedef NS_ENUM(NSInteger, MoPubVASAdapterError) {
 // Configuration keys
 extern NSString * const kMoPubVASAdapterPlacementId;
 extern NSString * const kMoPubVASAdapterSiteId;
-extern NSString * const kMoPubMillennialAdapterPlacementId;
-extern NSString * const kMoPubMillennialAdapterSiteId;
 extern NSString * const kMoPubVASAdapterVersion;
+extern NSString * const kMoPubServerExtrasAdContent;
+extern NSString * const kMoPubRequestMetadataAdContent;
+
 extern NSTimeInterval kMoPubVASAdapterSATimeoutInterval;
 
 @interface VerizonAdapterConfiguration : MPBaseAdapterConfiguration
-+ (NSString *)appMediator;
-@end
-
-@interface MillennialAdapterConfiguration : VerizonAdapterConfiguration
++ (NSString *)mediator;
 @end

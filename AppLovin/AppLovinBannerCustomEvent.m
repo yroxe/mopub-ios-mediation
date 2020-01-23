@@ -67,6 +67,20 @@ static NSMutableDictionary<NSString *, ALAdView *> *ALGlobalAdViews;
     }
     
     self.sdk = [self SDKFromCustomEventInfo: info];
+    
+    if (self.sdk == nil) {
+        NSString *failureReason = @"ALSdk instance is nil likely because no AppLovin SDK key is available. Failing ad request";
+        
+        NSError *error = [NSError errorWithDomain: kALMoPubMediationErrorDomain
+                                             code: kALErrorCodeSdkDisabled
+                                         userInfo: @{NSLocalizedFailureReasonErrorKey: failureReason}];
+        MPLogAdEvent([MPLogEvent adLoadFailedForAdapter:NSStringFromClass(self.class) error:error], @"");
+        
+        [self.delegate bannerCustomEvent:self didFailToLoadAdWithError: error];
+
+        return;
+    }
+
     self.sdk.mediationProvider = ALMediationProviderMoPub;
     [self.sdk setPluginVersion: AppLovinAdapterConfiguration.pluginVersion];
     
@@ -80,7 +94,7 @@ static NSMutableDictionary<NSString *, ALAdView *> *ALGlobalAdViews;
     zoneIdentifier = ZONE_FROM_INFO(info);
     
     // Create adview based off of zone (if any)
-    self.adView = [[self class] adViewForFrame: CGRectMake(0, 0, adSize.width, adSize.height)
+    self.adView = [[self class] adViewForFrame: [self rectFromAppLovinAdSize: adSize]
                                         adSize: adSize
                                 zoneIdentifier: zoneIdentifier
                                    customEvent: self
@@ -114,17 +128,31 @@ static NSMutableDictionary<NSString *, ALAdView *> *ALGlobalAdViews;
 - (ALAdSize *)appLovinAdSizeFromRequestedSize:(CGSize)size
 {
     // Default to standard banner size
-    ALAdSize * adSize = [ALAdSize sizeBanner];
+    ALAdSize * adSize = ALAdSize.banner;
     
     // Size can contain an AppLovin leaderboard ad size of 728x90
     if (size.width >= 728 && size.height >= 90) {
-        adSize = [ALAdSize sizeLeader];
+        adSize = ALAdSize.leader;
     } else if (size.width >= 300 && size.height >= 250) {
         // Size can contain an AppLovin medium rectangle
-        adSize = [ALAdSize sizeMRec];
+        adSize = ALAdSize.mrec;
     }
     
     return adSize;
+}
+
+- (CGRect)rectFromAppLovinAdSize:(ALAdSize *)alAdSize
+{
+    // Default to standard banner size
+    CGRect adRect = CGRectMake(0, 0, 320, 50);
+    
+    if (alAdSize == ALAdSize.leader) {
+        adRect = CGRectMake(0, 0, 728, 90);
+    } else if (alAdSize == ALAdSize.mrec) {
+        adRect = CGRectMake(0, 0, 300, 250);
+    }
+    
+    return adRect;
 }
 
 - (MOPUBErrorCode)toMoPubErrorCode:(int)appLovinErrorCode

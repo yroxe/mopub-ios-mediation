@@ -43,15 +43,8 @@
     MPLogInfo(@"Requesting VAS interstitial with event info %@.", info);
     
     NSString *siteId = info[kMoPubVASAdapterSiteId];
-    if (siteId.length == 0)
-    {
-        siteId = info[kMoPubMillennialAdapterSiteId];
-    }
     NSString *placementId = info[kMoPubVASAdapterPlacementId];
-    if (placementId.length == 0)
-    {
-        placementId = info[kMoPubMillennialAdapterPlacementId];
-    }
+    
     if (siteId.length == 0 || placementId.length == 0)
     {
         NSError *error = [VASErrorInfo errorWithDomain:kMoPubVASAdapterErrorDomain
@@ -81,16 +74,30 @@
     }
     
     [VASAds sharedInstance].locationEnabled = [MoPub sharedInstance].locationUpdatesEnabled;
+    [VerizonAdapterConfiguration setCachedInitializationParameters:info];
     
-    VASRequestMetadataBuilder *metaDataBuilder = [[VASRequestMetadataBuilder alloc] init];
-    [metaDataBuilder setAppMediator:VerizonAdapterConfiguration.appMediator];
     self.interstitialAdFactory = [[VASInterstitialAdFactory alloc] initWithPlacementId:placementId vasAds:[VASAds sharedInstance] delegate:self];
-    [self.interstitialAdFactory setRequestMetadata:metaDataBuilder.build];
     
     VASBid *bid = [MPVerizonBidCache.sharedInstance bidForPlacementId:placementId];
     if (bid) {
         [self.interstitialAdFactory loadBid:bid interstitialAdDelegate:self];
     } else {
+        VASRequestMetadataBuilder *metadataBuilder = [[VASRequestMetadataBuilder alloc] initWithRequestMetadata:[VASAds sharedInstance].requestMetadata];
+        metadataBuilder.mediator = VerizonAdapterConfiguration.mediator;
+        
+        if (adMarkup.length > 0) {
+            NSMutableDictionary<NSString *, id> *placementData =
+            [NSMutableDictionary dictionaryWithDictionary:
+             @{
+                 kMoPubRequestMetadataAdContent : adMarkup,
+                 @"overrideWaterfallProvider"  : @"waterfallprovider/sideloading"
+             }
+             ];
+            
+            [metadataBuilder setPlacementData:placementData];
+        }
+        
+        [self.interstitialAdFactory setRequestMetadata:metadataBuilder.build];
         [self.interstitialAdFactory load:self];
     }
     
@@ -251,7 +258,7 @@
                        completion:(nonnull VASBidRequestCompletionHandler)completion
 {
     VASRequestMetadataBuilder *metaDataBuilder = [[VASRequestMetadataBuilder alloc] init];
-    [metaDataBuilder setAppMediator:VerizonAdapterConfiguration.appMediator];
+    metaDataBuilder.mediator = VerizonAdapterConfiguration.mediator;
     [VASInterstitialAdFactory requestBidForPlacementId:placementId requestMetadata:metaDataBuilder.build vasAds:[VASAds sharedInstance] completionHandler:^(VASBid * _Nullable bid, VASErrorInfo * _Nullable errorInfo) {
         dispatch_async(dispatch_get_main_queue(), ^{
             if (bid) {
@@ -264,6 +271,4 @@
     }];
 }
 
-@end
-@implementation MPMillennialInterstitialCustomEvent
 @end

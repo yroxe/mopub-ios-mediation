@@ -1,4 +1,13 @@
 ## Changelog
+* 6.13.0.0.0
+    * This version of the adapters has been certified with ironSource 6.13.0.0.
+
+* 6.11.0.0.0
+    * This version of the adapters has been certified with ironSource 6.11.0.0.
+
+* 6.10.0.0.0
+    * This version of the adapters has been certified with ironSource 6.10.0.0.
+
 * 6.8.7.0.0
     * This version of the adapters has been certified with ironSource 6.8.7.0 and is compatible with iOS 13.
 
