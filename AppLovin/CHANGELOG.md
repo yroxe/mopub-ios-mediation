@@ -1,4 +1,7 @@
 ## Changelog
+   * 6.11.1.0
+     * This version of the adapters has been certified with AppLovin SDK 6.11.1.
+
    * 6.11.0.0
      * This version of the adapters has been certified with AppLovin SDK 6.11.0.
   
