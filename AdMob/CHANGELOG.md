@@ -1,4 +1,7 @@
 ## Changelog
+  * 7.55.0.0
+    * This version of the adapters has been certified with AdMob 7.55.0
+
   * 7.53.1.2
     * MoPub now collects GDPR consent on behalf of Google.
 
