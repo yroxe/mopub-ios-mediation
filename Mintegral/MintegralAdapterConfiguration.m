@@ -11,6 +11,7 @@
 @end
 
 static BOOL mintegralSDKInitialized = NO;
+static BOOL mute = NO;
 
 NSString *const kMintegralErrorDomain = @"com.mintegral.iossdk.mopub";
 NSString *const kPluginNumber = @"Y+H6DFttYrPQYcIA+F2F+F5/Hv==";
@@ -21,7 +22,7 @@ NSString *const kNetworkName = @"mintegral";
 #pragma mark - MPAdapterConfiguration
 
 - (NSString *)adapterVersion {
-    return @"5.9.0.0.0";
+    return @"6.1.1.0.1";
 }
 
 - (NSString *)biddingToken {
@@ -33,7 +34,7 @@ NSString *const kNetworkName = @"mintegral";
 }
 
 - (NSString *)networkSdkVersion {
-    return @"5.9.0.0";
+    return @"6.1.1.0";
 }
 
 - (void)initializeNetworkWithConfiguration:(NSDictionary<NSString *,id> *)configuration complete:(void (^)(NSError * _Nullable))complete {
@@ -109,6 +110,14 @@ NSString *const kNetworkName = @"mintegral";
     user.pay = pay;
     
     [[MTGSDK sharedInstance] setUserInfo:user];
+}
+
++(BOOL)isMute {
+    return mute;
+}
+
++(void)setMute:(BOOL)muteStatus {
+    mute = muteStatus;
 }
 
 @end
