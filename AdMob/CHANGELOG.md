@@ -1,4 +1,7 @@
 ## Changelog
+  * 7.58.0.1
+    * Redefine valid architectures.
+
   * 7.58.0.0
     * This version of the adapters has been certified with AdMob 7.58.0 and MoPub 5.12.1.
 
