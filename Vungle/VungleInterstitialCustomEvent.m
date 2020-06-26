@@ -6,19 +6,19 @@
 //
 
 #import <VungleSDK/VungleSDK.h>
-#import "VungleInterstitialCustomEvent.h"
-#import "VungleAdapterConfiguration.h"
 #if __has_include("MoPub.h")
     #import "MPLogging.h"
     #import "MoPub.h"
 #endif
+#import "VungleAdapterConfiguration.h"
+#import "VungleInterstitialCustomEvent.h"
 #import "VungleRouter.h"
 
 // If you need to play ads with vungle options, you may modify playVungleAdFromRootViewController and create an options dictionary and call the playAd:withOptions: method on the vungle SDK.
 
 @interface VungleInterstitialCustomEvent () <VungleRouterDelegate>
 
-@property (nonatomic, assign) BOOL handledAdAvailable;
+@property (nonatomic) BOOL handledAdAvailable;
 @property (nonatomic, copy) NSString *placementId;
 @property (nonatomic, copy) NSDictionary *options;
 
@@ -111,7 +111,7 @@
     }
 }
 
-- (void)invalidate
+- (void)dealloc
 {
     [[VungleRouter sharedRouter] clearDelegateForPlacementId:self.placementId];
 }
@@ -133,7 +133,8 @@
     [self.delegate fullscreenAdAdapterAdWillAppear:self];
 }
 
-- (void)vungleAdDidAppear {
+- (void)vungleAdDidAppear
+{
     MPLogAdEvent([MPLogEvent adShowSuccessForAdapter:NSStringFromClass(self.class)], [self getPlacementID]);
     MPLogAdEvent([MPLogEvent adDidAppearForAdapter:NSStringFromClass(self.class)], [self getPlacementID]);
     [self.delegate fullscreenAdAdapterAdDidAppear:self];
@@ -152,11 +153,15 @@
     [self.delegate fullscreenAdAdapterAdDidDisappear:self];
 }
 
-- (void)vungleAdWasTapped
+- (void)vungleAdTrackClick
 {
     MPLogAdEvent([MPLogEvent adTappedForAdapter:NSStringFromClass(self.class)], [self getPlacementID]);
-    [self.delegate fullscreenAdAdapterDidReceiveTap:self];
     [self.delegate fullscreenAdAdapterDidTrackClick:self];
+    [self.delegate fullscreenAdAdapterDidReceiveTap:self];
+}
+
+- (void)vungleAdWillLeaveApplication
+{
     MPLogAdEvent([MPLogEvent adWillLeaveApplicationForAdapter:NSStringFromClass(self.class)], [self getPlacementID]);
     [self.delegate fullscreenAdAdapterWillLeaveApplication:self];
 }
@@ -173,7 +178,8 @@
     [self.delegate fullscreenAdAdapter:self didFailToShowAdWithError:error];
 }
 
-- (NSString *)getPlacementID {
+- (NSString *)getPlacementID
+{
     return self.placementId;
 }
 @end
