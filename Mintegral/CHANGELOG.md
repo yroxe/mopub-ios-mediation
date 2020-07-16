@@ -1,4 +1,8 @@
 ## Changelog
+ * 6.3.4.0.0
+    * This version of the adapters has been certified with Mintegral 6.3.4.0 and MoPub 5.13.1.
+    * Add support for Mintegral's `onVideoAdDidClosed:`. MoPub's `fullscreenAdAdapterAdDidDisappear:` will fire at this time when the video has been closed.
+
  * 6.3.3.0.0
     * This version of the adapters has been certified with Mintegral 6.3.3.0 and MoPub 5.13.0.
 
