@@ -1,4 +1,7 @@
 ## Changelog	
+   * 3.1.0.5.1
+     * Fix adapter compiler warnings.
+
    * 3.1.0.5.0
      * Rename ad renderer's name to `PangleAdRenderer`.
      * This version of the adapters has been certified with Pangle 3.1.0.5 and MoPub SDK 5.13.1.
