@@ -1,4 +1,7 @@
 ## Changelog
+* 6.3.5.0.3
+   * Stop calling `inlineAdAdapterWillBeginUserAction:` to fix a freezing issue in Unity games.
+   
  * 6.3.5.0.2
     * Fix adapter compiler warnings.
 

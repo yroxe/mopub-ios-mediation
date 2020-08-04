@@ -106,7 +106,6 @@ typedef enum {
     if ([self.delegate respondsToSelector:@selector(trackClick)]) {
         MPLogAdEvent([MPLogEvent adTappedForAdapter:NSStringFromClass(self.class)], self.mintegralAdUnitId);
         [self.delegate inlineAdAdapterDidTrackClick:self];
-        [self.delegate inlineAdAdapterWillBeginUserAction:self];
     }
 }
 
