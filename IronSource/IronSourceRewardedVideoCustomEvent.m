@@ -89,7 +89,7 @@
         // Cache the initialization parameters
         [IronSourceAdapterConfiguration updateInitializationParameters:info];
         [[IronSourceManager sharedManager] initIronSourceSDKWithAppKey:appKey forAdUnits:[NSSet setWithObject:@[IS_REWARDED_VIDEO]]];
-        [self loadRewardedVideo: self.instanceID];
+        [self loadRewardedVideo: self.instanceID WithAdMarkup: adMarkup];
     } @catch (NSException *exception) {
         MPLogInfo(@"IronSource Rewarded Video initialization with error: %@", exception);
         NSError *error = [NSError errorWithDomain:MoPubRewardedVideoAdsSDKDomain code:MOPUBErrorAdapterInvalid userInfo:@{NSLocalizedDescriptionKey: @"Custom event class Rewarded Video error.", NSLocalizedRecoverySuggestionErrorKey: @"Native Network or Custom Event adapter was configured incorrectly."}];
@@ -107,11 +107,11 @@
 }
 
 #pragma mark IronSource RV Methods
--(void) loadRewardedVideo:(NSString *)instanceId{
+-(void) loadRewardedVideo:(NSString *)instanceId WithAdMarkup: (NSString *) adMarkup {
     MPLogInfo(@"IronSource loadRewardedVideo for instance %@ (current instance %@)",
               instanceId, [self getAdNetworkId]);
     MPLogAdEvent([MPLogEvent adLoadAttemptForAdapter:NSStringFromClass(self.class) dspCreativeId:nil dspName:nil],instanceId);
-    [[IronSourceManager sharedManager] loadRewardedAdWithDelegate:self instanceID: instanceId];
+    [[IronSourceManager sharedManager] loadRewardedAdWithDelegate:self instanceID: instanceId WithAdMarkup: adMarkup];
 }
 
 #pragma mark IronSource RV Events
@@ -194,6 +194,5 @@
     MPLogAdEvent([MPLogEvent adLoadSuccessForAdapter:NSStringFromClass(self.class)], instanceId);
     [self.delegate fullscreenAdAdapterDidLoadAd:self];
 }
-
 @end
 
