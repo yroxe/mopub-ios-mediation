@@ -1,4 +1,7 @@
 ## Changelog
+  * 8.2.0.3
+      * Disable passing `CBLoggingLevelVerbose` to prevent app crashes caused by Chartboost SDK 8.2.0 and 8.2.1
+
   * 8.2.0.2
       * Fix adapter compiler warnings.
 
