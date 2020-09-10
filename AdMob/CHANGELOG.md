@@ -1,4 +1,7 @@
 ## Changelog
+  * 7.65.0.0
+    * This version of the adapters has been certified with AdMob 7.65.0 and MoPub 5.13.1.
+
   * 7.64.0.1
     * Remove unnecessary `VALID_ARCHS` declaration.
 
