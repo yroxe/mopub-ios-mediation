@@ -17,6 +17,7 @@
 #endif
 
 #define ADCOLONY_INITIALIZATION_TIMEOUT dispatch_time(DISPATCH_TIME_NOW, 30 * NSEC_PER_SEC)
+#define ADCOLONY_AD_MARKUP @"adm"
 
 @interface AdColonyRewardedVideoCustomEvent () <AdColonyInterstitialDelegate>
 
@@ -27,6 +28,8 @@
 @end
 
 @implementation AdColonyRewardedVideoCustomEvent
+@dynamic delegate;
+@dynamic localExtras;
 
 - (NSString *) getAdNetworkId {
     return _zoneId;
@@ -75,9 +78,6 @@
         return;
     }
     
-    MPLogAdEvent([MPLogEvent adLoadAttemptForAdapter:NSStringFromClass(self.class)
-                                       dspCreativeId:nil
-                                             dspName:nil], [self getAdNetworkId]);
     [AdColonyAdapterConfiguration updateInitializationParameters:parameters];
     [AdColonyController initializeAdColonyCustomEventWithAppId:appId
                                                     allZoneIds:allZoneIds
@@ -119,8 +119,14 @@
         AdColonyAdOptions *adOptions = [AdColonyAdOptions new];
         adOptions.showPrePopup = showPrePopup;
         adOptions.showPostPopup = showPostPopup;
-        
-       [AdColony requestInterstitialInZone:self.zoneId
+        if (adMarkup != nil) {
+            [adOptions setOption:ADCOLONY_AD_MARKUP withStringValue:adMarkup];
+        }
+
+        MPLogAdEvent([MPLogEvent adLoadAttemptForAdapter:NSStringFromClass(self.class)
+                                           dspCreativeId:nil
+                                                 dspName:nil], [self getAdNetworkId]);
+        [AdColony requestInterstitialInZone:self.zoneId
                                    options:adOptions
                                andDelegate:self];
     }];
@@ -206,5 +212,7 @@
     
     [self.delegate fullscreenAdAdapterDidTrackClick:self];
 }
+
+@dynamic hasAdAvailable;
 
 @end

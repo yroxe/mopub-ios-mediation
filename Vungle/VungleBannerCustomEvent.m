@@ -20,6 +20,7 @@
 @property (nonatomic, assign) NSDictionary *bannerInfo;
 @property (nonatomic, assign) NSTimer *timeOutTimer;
 @property (nonatomic) BOOL isAdCached;
+@property (nonatomic) BOOL isAdLoaded;
 @property (nonatomic) CGSize bannerSize;
 
 @end
@@ -27,6 +28,8 @@
 @implementation VungleBannerCustomEvent
 
 @synthesize bannerState;
+@dynamic delegate;
+@dynamic localExtras;
 
 - (BOOL)enableAutomaticImpressionAndClickTracking
 {
@@ -79,7 +82,7 @@
 {
     CGFloat width = size.width;
     CGFloat height = size.height;
-
+    
     if (height >= kVNGLeaderboardBannerSize.height && width >= kVNGLeaderboardBannerSize.width) {
         return kVNGLeaderboardBannerSize;
     } else if (height >= kVNGBannerSize.height && width >= kVNGBannerSize.width) {
@@ -95,6 +98,13 @@
 
 - (void)vungleAdDidLoad
 {
+    if (self.isAdLoaded) {
+        // Already invoked an ad load callback.
+        return;
+    }
+
+    self.isAdLoaded = YES;
+
     if (self.options) {
         self.options = nil;
     }
@@ -137,13 +147,13 @@
                                                              options:self.options
                                                       forPlacementID:self.placementId
                                                                 size:self.bannerSize];
-
+    
     if (bannerAdView) {
         MPLogAdEvent([MPLogEvent adLoadSuccessForAdapter:NSStringFromClass(self.class)], self.getPlacementID);
         MPLogAdEvent([MPLogEvent adShowAttemptForAdapter:NSStringFromClass(self.class)], self.getPlacementID);
         [self.delegate inlineAdAdapter:self didLoadAdWithAdView:bannerAdView];
         [self.delegate inlineAdAdapterDidTrackImpression:self];
-         MPLogAdEvent([MPLogEvent adShowSuccessForAdapter:NSStringFromClass(self.class)], self.getPlacementID);
+        MPLogAdEvent([MPLogEvent adShowSuccessForAdapter:NSStringFromClass(self.class)], self.getPlacementID);
         self.isAdCached = YES;
     } else {
         [self.delegate inlineAdAdapter:self didFailToLoadAdWithError:nil];
@@ -161,6 +171,11 @@
 
 - (void)vungleAdDidFailToLoad:(NSError *)error
 {
+    if (self.isAdLoaded) {
+        // Already invoked an ad load callback.
+        return;
+    }
+
     MPLogAdEvent([MPLogEvent adLoadFailedForAdapter:NSStringFromClass(self.class) error:error], [self getPlacementID]);
     NSError *loadFailError = nil;
     if (error) {
@@ -187,6 +202,34 @@
 - (CGSize)getBannerSize
 {
     return self.bannerSize;
+}
+
+- (void)didDisplayAd {
+    MPLogInfo(@"Vungle video banner did display");
+}
+
+- (void)rotateToOrientation:(UIInterfaceOrientation)newOrientation {
+}
+
+- (void)vungleAdDidAppear
+{
+    MPLogInfo(@"Vungle video banner did appear");
+}
+
+- (void)vungleAdDidDisappear {
+    MPLogInfo(@"Vungle video banner did disappear");
+}
+
+- (void)vungleAdDidFailToPlay:(NSError *)error {
+    MPLogInfo(@"Vungle video banner failed to play with error : %@", error.localizedDescription);
+}
+
+- (void)vungleAdWillAppear {
+    MPLogInfo(@"Vungle video banner will appear");
+}
+
+- (void)vungleAdWillDisappear {
+    MPLogInfo(@"Vungle video banner will disappear");
 }
 
 @end
